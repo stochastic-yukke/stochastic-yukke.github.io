@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+    {% include head.html %}
+  </head>
+  <body>
+    <div class="wrapper">
+
+      {% if page.url == "/" %}
+        {% include header.html %}
+      {% endif %}
+
+      <section>
+
+        {% if page.url != "/" %}
+        <div class="breadcrumbs">
+            <a href="{{ "/" | relative_url }}">Home</a> &gt; {{ page.title }}
+        </div>
+        {% endif %}
+
+        {{ content }}
+
+      </section>
+
+    </div>
+
+    {% include footer.html %}
+
+  </body>
+</html>

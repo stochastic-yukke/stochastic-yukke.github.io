@@ -1,0 +1,39 @@
+title: 真砂なす数なき山巓の
+description: "Mathematics: Mountaineering & Meandering"
+project:
+  name: 真砂なす数なき山巓の
+  owner: stochastic-yukke
+  repo: https://github.com/stochastic-yukke/stochastic-yukke.github.io
+
+show_downloads: false
+
+remote_theme: pages-themes/minimal@v0.2.0
+plugins:
+  - jekyll-remote-theme
+  - jemoji
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+collections:
+  archives:
+    output: true
+    sort_by: date
+    permalink: "/archives/:path/"
+  marginalia:
+    output: true
+    sort_by: date
+    permalink: "/marginalia/:path"
+  street-trail:
+    output: true
+    sort_by: date
+    permalink: "/street-trail/:path"
+
+nav:
+  - title: About
+    url: /about/
+  - title: archives
+    url: /archives/
+  - title: Marginalia
+    url: /marginalia/
+  - title: Street-Trail
+    url: /street-trail/
