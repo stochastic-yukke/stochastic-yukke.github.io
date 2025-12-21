@@ -88,20 +88,16 @@ a:hover .github-icon {
 
 /* Home以外でのグローバルナビゲーション */
 .global-header {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  z-index: 1000;
+
   background-color: #2F3437;
   border-bottom: 1px solid #e0e0e0;
   padding: 10px 0;
-  margin-bottom: 20px;
-
-  margin-top: 0;
-  margin-left: 0;
-  @media screen and (min-width: 600px) {
-    margin-top: -50px;
-    margin-left: -50px;
-    margin-right: -50px;
-    width: calc(100% + 100px);
-  }
+  height: auto;
 
   /* ナビゲーションの配置 */
   .site-nav {
