@@ -29,11 +29,15 @@ collections:
     permalink: "/street-trail/:path"
 
 nav:
-  - title: About
+  - title: About(日本語)
     url: /about/
+  - title: About(English)
+    url: /en/about/
   - title: archives
     url: /archives/
   - title: Marginalia
     url: /marginalia/
   - title: Street-Trail
     url: /street-trail/
+  - title: Credits
+    url: /credits/

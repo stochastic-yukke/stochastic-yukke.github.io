@@ -2,19 +2,10 @@
 layout: default
 title: Home
 ---
-## Latest Posts
+まずはこちら：[About](/about.html) / Start Here: [About](/en/about.html)<br>
+Here are credits: [Credits](/credits.html/)<br>
 
-### Street-Trail
-{% assign latest_trail = site['street-trail'] | sort: 'date' | reverse | first %}
-{% if latest_trail %}
-  **[{{ latest_trail.title }}]({{ latest_trail.url }})** <small>({{ latest_trail.date | date: "%Y-%m-%d" }})</small><br>
-  {{ latest_trail.excerpt | strip_html | truncate: 120 }}
-{% else %}
-  (No records yet)
-{% endif %}
-> <small>[more](/street-trail/)</small>
-
----
+# Latest Posts
 
 ### Archives
 {% assign latest_archive = site.archives | sort: 'date' | reverse | first %}
@@ -24,7 +15,7 @@ title: Home
 {% else %}
   (No archives yet)
 {% endif %}
-> <small>[more](/archives/)</small>
+> <small>[**more>>**](/archives/)</small>
 
 ---
 
@@ -36,4 +27,16 @@ title: Home
 {% else %}
   (No notes yet)
 {% endif %}
-> <small>[more](/marginalia/)</small>
+> <small>[**more>>**](/marginalia/)</small>
+
+---
+
+### Street-Trail
+{% assign latest_trail = site['street-trail'] | sort: 'date' | reverse | first %}
+{% if latest_trail %}
+  **[{{ latest_trail.title }}]({{ latest_trail.url }})** <small>({{ latest_trail.date | date: "%Y-%m-%d" }})</small><br>
+  {{ latest_trail.excerpt | strip_html | truncate: 120 }}
+{% else %}
+  (No records yet)
+{% endif %}
+> <small>[**more>>**](/street-trail/)</small>
