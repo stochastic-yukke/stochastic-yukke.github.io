@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: "en-US" }}">
+<html lang="{{ page.lang | default: site.lang | default: "ja" }}">
   <head>
     {% include head.html %}
   </head>
   <body>
-    <div class="wrapper">
+    {% if page.url != "/" %}
+      <header class="global-header">
+        {% include top-nav.html %}
+      </header>
+    {% endif %}
 
+    <div class="wrapper">
       {% if page.url == "/" %}
         {% include header.html %}
       {% endif %}
@@ -20,6 +25,7 @@
             {% endif %}
             &gt; {{ page.title }}
         </div>
+        <div class=""></div>
         {% endif %}
 
         {{ content }}

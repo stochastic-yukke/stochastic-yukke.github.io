@@ -34,7 +34,7 @@ body {
   margin-bottom: 20px;
   font-size: 0.9em;
   color: #666;
-  
+
   a {
     text-decoration: none;
     color: #337ab7;
@@ -55,14 +55,14 @@ body {
   font-size: 0.8em;
   color: #999;
   line-height: 1.5;
-  
+
   a {
     color: #999;
     text-decoration: underline;
   }
 }
 
-/* ロゴ画像 */
+/* ロゴ */
 .site-logo {
   max-width: 250px;
   width: 100%;
@@ -75,16 +75,63 @@ body {
   fill: #333;
   transition: opacity 0.3s ease;
 }
-
 a:hover .github-icon {
   opacity: 0.7;
 }
-
 .header-gh {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-
 .footer-gh {
   margin-bottom: 20px;
+}
+
+/* Home以外でのグローバルナビゲーション */
+.global-header {
+  width: 100%;
+  background-color: #2F3437;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 0;
+  margin-bottom: 20px;
+
+  /* ナビゲーションの配置 */
+  .site-nav {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 15px;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex; /* 横に並べる */
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+    }
+
+    li {
+      margin: 0;
+
+      a {
+        text-decoration: none;
+        color: #FFF8E7;
+        font-weight: bold;
+        font-size: 0.9rem;
+
+        &:hover {
+          color: #2980b9;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+/* スマホ等対応 */
+@media screen and (max-width: 600px) {
+  .global-header .site-nav ul {
+    justify-content: center;
+    gap: 15px;
+  }
 }

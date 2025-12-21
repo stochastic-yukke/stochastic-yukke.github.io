@@ -25,14 +25,14 @@ Here are credits: **[Credits](/credits/)**<br>
   **[{{ latest_marg.title }}]({{ latest_marg.url }})** <small>({{ latest_marg.date | date: "%Y-%m-%d" }})</small><br>
   {{ latest_marg.excerpt | strip_html | truncate: 120 }}
 {% else %}
-  (No notes yet)
+  (No marginalia yet)
 {% endif %}
 > **<small>[more>>](/marginalia/)</small>**
 
 ---
 
 ### Street-Trail
-{% assign latest_trail = site['street-trail'] | sort: 'date' | reverse | first %}
+{% assign latest_trail = site.street-trail | sort: 'date' | reverse | first %}
 {% if latest_trail %}
   **[{{ latest_trail.title }}]({{ latest_trail.url }})** <small>({{ latest_trail.date | date: "%Y-%m-%d" }})</small><br>
   {{ latest_trail.excerpt | strip_html | truncate: 120 }}

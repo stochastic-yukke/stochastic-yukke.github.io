@@ -22,18 +22,18 @@ collections:
   marginalia:
     output: true
     sort_by: date
-    permalink: "/marginalia/:path"
+    permalink: "/marginalia/:path/"
   street-trail:
     output: true
     sort_by: date
-    permalink: "/street-trail/:path"
+    permalink: "/street-trail/:path/"
 
 nav:
   - title: About(日本語)
     url: /about/
   - title: About(English)
     url: /en/about/
-  - title: archives
+  - title: Archives
     url: /archives/
   - title: Marginalia
     url: /marginalia/
