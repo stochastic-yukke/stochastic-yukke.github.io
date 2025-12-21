@@ -67,7 +67,8 @@ body {
   max-width: 250px;
   width: 100%;
   height: auto;
-  margin-bottom: 0px;
+  margin-top: -10px;
+  margin-bottom: -10px;
 }
 
 /* GitHubアイコンのスタイル */
@@ -176,5 +177,15 @@ header h1 .poetic-line {
 @media screen and (max-width: 600px) {
   header h1 .poetic-line {
     line-height: 1.2;
+  }
+  .wrapper header {
+    margin-top: -50px;
+    margin-bottom: 0;
+  }
+  header p {
+    margin-top: -10px;
+  }
+  header ul {
+    margin-top: 0px;
   }
 }
