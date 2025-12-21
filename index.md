@@ -2,8 +2,8 @@
 layout: default
 title: Home
 ---
-まずはこちら：[**About**](/about/) / Start Here: [**About**](/en/about/)<br>
-Here are credits: [**Credits**](/credits/)<br>
+まずはこちら：**[About](/about/)** / Start Here: **[About](/en/about/)**<br>
+Here are credits: **[Credits](/credits/)**<br>
 
 # Latest Posts
 

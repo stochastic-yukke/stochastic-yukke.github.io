@@ -14,7 +14,11 @@
 
         {% if page.url != "/" %}
         <div class="breadcrumbs">
-            <a href="{{ "/" | relative_url }}">Home</a> &gt; {{ page.title }}
+            <a href="{{ "/" | relative_url }}">Home</a>
+            {% if page.collection %}
+              &gt; <a href="{{ '/' | append: page.collection | append: '/' | relative_url }}">{{ page.collection | capitalize }}</a>
+            {% endif %}
+            &gt; {{ page.title }}
         </div>
         {% endif %}
 
