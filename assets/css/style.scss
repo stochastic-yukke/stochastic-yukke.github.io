@@ -88,11 +88,11 @@ a:hover .github-icon {
 
 /* Home以外でのグローバルナビゲーション */
 .global-header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 9999;
 
   background-color: #2F3437;
   border-bottom: 1px solid #e0e0e0;
@@ -133,10 +133,14 @@ a:hover .github-icon {
   }
 }
 
+/* ヘッダーと本文とをずらす */
+.wrapper {
+  margin-top: 80px !important;
+}
+
 /* スマホ等対応 */
 @media screen and (max-width: 600px) {
-  .global-header .site-nav ul {
-    justify-content: center;
-    gap: 15px;
+  .wrapper {
+    margin-top: 100px !important;
   }
 }
