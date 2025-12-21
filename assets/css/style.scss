@@ -147,6 +147,7 @@ a:hover .github-icon {
 header h1, header h1 a {
   font-family: 'BIZ UDMincho', serif;
   font-weight: 700;
+  font-size: 2.2rem;
 
   color: #003366;
 
@@ -158,6 +159,17 @@ header h1 .poetic-line {
   display: block;
   margin-bottom: 5px;
 }
+/* PC対応 */
+@media screen and (min-width: 768px) {
+  .wrapper header {
+    margin-top: -50px;
+    margin-bottom: 0;
+  }
+  header p, header ul {
+    margin-top: 10px;
+  }
+}
+
 /* スマホ等対応 */
 @media screen and (max-width: 600px) {
   header h1 .poetic-line {
