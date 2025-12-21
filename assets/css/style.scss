@@ -88,7 +88,7 @@ a:hover .github-icon {
 
 /* Home以外でのグローバルナビゲーション */
 .global-header {
-  width: 100vw;
+  width: 100%;
   background-color: #2F3437;
   border-bottom: 1px solid #e0e0e0;
   padding: 10px 0;
@@ -97,9 +97,10 @@ a:hover .github-icon {
   margin-top: 0;
   margin-left: 0;
   @media screen and (min-width: 600px) {
-    margin-top: -40px;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+    margin-top: -50px;
+    margin-left: -50px;
+    margin-right: -50px;
+    width: calc(100% + 100px);
   }
 
   /* ナビゲーションの配置 */
