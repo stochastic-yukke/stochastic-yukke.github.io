@@ -68,3 +68,22 @@ body {
   height: auto;
   margin-bottom: 15px;
 }
+
+/* GitHubアイコンのスタイル */
+.github-icon {
+  fill: #333;
+  transition: opacity 0.3s ease;
+}
+
+a:hover .github-icon {
+  opacity: 0.7;
+}
+
+.header-gh {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.footer-gh {
+  margin-bottom: 10px;
+}
