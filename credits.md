@@ -4,10 +4,10 @@ title: Credits
 permalink: /credits/
 ---
 
-** &copy; {{ site.time | date: "%Y" }} {{ site.title }} **
+**&copy; {{ site.time | date: "%Y" }} {{ site.title }}**
 
 ## Site theme
-Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist/minimal">orderedlist</a>
+Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist/minimal">orderedlist.</a><br>
 Thank you very much!
 
 ## Logo and Favicon

@@ -12,6 +12,7 @@ On this website, I write:
 - Marginalia(A collection of memos focused on mathematics),
 - Street-Trail(Records of Hikes and Walks).
 <br>
+
 Currently, this site is available only in Japanese. I hope to provide English content in the future.
 
 **[>> 日本語で読む](/about/)**
