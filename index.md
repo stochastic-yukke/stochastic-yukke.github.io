@@ -2,8 +2,8 @@
 layout: default
 title: Home
 ---
-まずはこちら：[About](/about.html) / Start Here: [About](/en/about.html)<br>
-Here are credits: [Credits](/credits.html/)<br>
+まずはこちら：[**About**](/about/) / Start Here: [**About**](/en/about/)<br>
+Here are credits: [**Credits**](/credits/)<br>
 
 # Latest Posts
 
@@ -15,7 +15,7 @@ Here are credits: [Credits](/credits.html/)<br>
 {% else %}
   (No archives yet)
 {% endif %}
-> <small>[**more>>**](/archives/)</small>
+> **<small>[more>>](/archives/)</small>**
 
 ---
 
@@ -27,7 +27,7 @@ Here are credits: [Credits](/credits.html/)<br>
 {% else %}
   (No notes yet)
 {% endif %}
-> <small>[**more>>**](/marginalia/)</small>
+> **<small>[more>>](/marginalia/)</small>**
 
 ---
 
@@ -39,4 +39,4 @@ Here are credits: [Credits](/credits.html/)<br>
 {% else %}
   (No records yet)
 {% endif %}
-> <small>[**more>>**](/street-trail/)</small>
+> **<small>[more>>](/street-trail/)</small>**
