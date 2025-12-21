@@ -67,7 +67,7 @@ body {
   max-width: 250px;
   width: 100%;
   height: auto;
-  margin-bottom: 8px;
+  margin-bottom: 0px;
 }
 
 /* GitHubアイコンのスタイル */
@@ -133,7 +133,7 @@ a:hover .github-icon {
 }
 /* ヘッダーと本文とをずらす */
 .wrapper {
-  margin-top: 60px !important;
+  margin-top: 50px !important;
 }
 /* スマホ等対応 */
 @media screen and (max-width: 600px) {
@@ -147,7 +147,7 @@ a:hover .github-icon {
 header h1, header h1 a {
   font-family: 'BIZ UDMincho', serif;
   font-weight: 700;
-  font-size: 3rem;
+  font-size: 3.2rem;
 
   color: #003366;
 
@@ -157,7 +157,7 @@ header h1, header h1 a {
 }
 header h1 .poetic-line {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 /* PC対応 */
 @media screen and (min-width: 768px) {
@@ -165,11 +165,13 @@ header h1 .poetic-line {
     margin-top: -70px;
     margin-bottom: 0;
   }
-  header p, header ul {
-    margin-top: 10px;
+  header p {
+    margin-top: -10px;
+  }
+  header ul {
+    margin-top: 0px;
   }
 }
-
 /* スマホ等対応 */
 @media screen and (max-width: 600px) {
   header h1 .poetic-line {
