@@ -15,7 +15,7 @@ Here are credits: **[Credits](/credits/)**<br>
 {% else %}
   (No archives yet)
 {% endif %}
-> **<small>[more>>](/archives/)</small>**
+> **<small style="font-size: 90%;">[more>>](/archives/)</small>**
 
 ---
 
@@ -27,7 +27,7 @@ Here are credits: **[Credits](/credits/)**<br>
 {% else %}
   (No marginalia yet)
 {% endif %}
-> **<small>[more>>](/marginalia/)</small>**
+> **<small style="font-size: 90%;">[more>>](/marginalia/)</small>**
 
 ---
 
@@ -39,4 +39,4 @@ Here are credits: **[Credits](/credits/)**<br>
 {% else %}
   (No records yet)
 {% endif %}
-> **<small>[more>>](/street-trail/)</small>**
+> **<small style="font-size: 90%;">[more>>](/street-trail/)</small>**
