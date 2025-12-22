@@ -13,6 +13,8 @@ On this website, I write:
 - Street-Trail(Records of Hikes and Walks).
 <br>
 
+This site's theme colour is Cosmic Latte `#FFF8E7`.<br>
+
 Currently, this site is available only in Japanese. I hope to provide English content in the future.
 
 **[>> 日本語で読む](/about/)**

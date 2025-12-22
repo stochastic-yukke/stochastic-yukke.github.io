@@ -13,4 +13,6 @@ permalink: /about/
 - Street-Trail(登山と散歩の記録).
 <br>
 
+このサイトのテーマカラーは，コズミックラテ `#FFF8E7`です。
+
 **[>> Read in English](/en/about/)**
