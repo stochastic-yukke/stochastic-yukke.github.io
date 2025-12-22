@@ -15,4 +15,6 @@ Logo & Favicon were designed in Adobe Express using ***Rampart One Regular***. S
 
 ## Fonts
 In addition to ***Rampart One Regular***, the following fonts were used. Special thanks to the SIL Open Font License!
-- ***BIZ UDMincho（BIZ UD明朝) Bold 700***,
+- ***BIZ UDMincho（BIZ UD明朝): Bold 700***,
+<!-- - ***Kaisei Tokumin: Regular 400; Bold 700***,
+- ***Zen Old Mincho: Regular 400; Bold 700***. -->
