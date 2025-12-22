@@ -191,13 +191,20 @@ header h1 .poetic-line {
 }
 
 /* 本文のフォントの設定 */
-@import url('https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Shippori+Mincho:wght@800&display=swap');
 body {
-  font-family: "Zen Old Mincho", serif;
+  font-family: "Sawarabi Mincho", serif;
+  font-weight: 400;
   font-size: 1.1rem;
   line-height: 1.6;
-  color: #333333;
+  color: #333;
 }
+/* boldのみしっぽり明朝 */
+b, strong {
+  font-family: "Shippori Mincho", serif;
+  font-weight: 800;
+}
+/* スマホ等対応 */
 @media screen and (max-width: 768px) {
   body {
     font-size: 0.95rem;
