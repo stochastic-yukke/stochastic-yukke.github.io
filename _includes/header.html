@@ -17,7 +17,7 @@
   <nav>
       <ul>
           {% for item in site.nav %}
-          <li><a href="{{ item.url | relative_url }}">{{ item.title }}</a></li>
+          <li><b><a href="{{ item.url | relative_url }}">{{ item.title }}</a></b></li>
           {% endfor %}
       </ul>
   </nav>
