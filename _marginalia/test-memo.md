@@ -9,3 +9,5 @@ $$
 \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
 $$
 </div>
+
+オイラーの公式は $e^{i\theta} = \cos \theta + i \sin \theta$ です。
