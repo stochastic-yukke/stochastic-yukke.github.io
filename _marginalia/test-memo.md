@@ -12,3 +12,7 @@ $$
 </div>
 
 オイラーの公式は $e^{i\theta}' = \cos \theta + i \sin \theta$ です。
+
+\[
+  \int f(x) dx
+\]
