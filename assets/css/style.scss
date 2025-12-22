@@ -191,15 +191,15 @@ header h1 .poetic-line {
 }
 
 /* 本文のフォントの設定 */
-@import url('https://fonts.googleapis.com/css2?family=Kaisei+Tokumin:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700&display=swap');
 body {
-  font-family: "Kaisei Tokumin", serif;
+  font-family: "Zen Old Mincho", serif;
   //font-size: 1.1rem;
   line-height: 1.6;
   color: #000000;
 }
-a {
+/* a {
   color: #1e6bb8;
   text-decoration: none;
   &:hover { text-decoration: underline; color: #155a9b; }
-}
+} */
