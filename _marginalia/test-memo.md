@@ -12,3 +12,5 @@ $$
 </div>
 
 オイラーの公式は $e^{i\theta}' = \cos \theta + i \sin \theta$ です。
+cohomologyというものが，なのである。！！！したがって，よって，
+以下に述べる定理が，:：homology

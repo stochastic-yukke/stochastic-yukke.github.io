@@ -189,3 +189,20 @@ header h1 .poetic-line {
     margin-top: 0px;
   }
 }
+
+/* 本文のフォントの設定 */
+@import url('https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap');
+body {
+  font-family: 'Klee One', cursive;
+  line-height: 1.8;
+  color: #333333;
+}
+/* 数式だけ少し大きくする */
+.katex {
+  font-size: 1.1em;
+}
+a {
+  color: #1e6bb8;
+  text-decoration: none;
+  &:hover { text-decoration: underline; color: #155a9b; }
+}
