@@ -41,3 +41,5 @@ nav:
     url: /street-trail/
   - title: Credits
     url: /credits/
+
+markdown: kramdown
