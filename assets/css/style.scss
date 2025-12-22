@@ -194,12 +194,9 @@ header h1 .poetic-line {
 @import url('https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap');
 body {
   font-family: 'Klee One', cursive;
+  font-size: 1.1rem;
   line-height: 1.8;
   color: #000000;
-}
-/* 数式だけ少し大きくする */
-.katex {
-  font-size: 1.1em;
 }
 a {
   color: #1e6bb8;
