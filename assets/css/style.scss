@@ -234,6 +234,8 @@ a:hover {
 .wrapper {
   margin-top: 60px !important;
 }
-body:not(:has(.global-header)) .wrapper {
-  margin-top: 0 !important;
+
+img {
+  max-width: 100%;
+  height: auto;
 }
