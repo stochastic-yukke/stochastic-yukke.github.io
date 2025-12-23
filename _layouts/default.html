@@ -4,37 +4,39 @@
     {% include head.html %}
   </head>
   <body>
-    {% if page.url != "/" %}
-      <header class="global-header">
-        {% include top-nav.html %}
-      </header>
-    {% endif %}
-
-    <div class="wrapper">
-      {% if page.url == "/" %}
-        {% include home-header.html %}
+    <div class="wrapper {% if page.url != '/' %}wide-layout{% endif %}">
+      {% if page.url != "/" %}
+        <header class="global-header">
+          {% include top-nav.html %}
+        </header>
       {% endif %}
 
-      <section>
-
-        {% if page.url != "/" %}
-        <div class="breadcrumbs">
-            <a href="{{ "/" | relative_url }}">Home</a>
-            {% if page.collection %}
-              &gt; <a href="{{ '/' | append: page.collection | append: '/' | relative_url }}">{{ page.collection | capitalize }}</a>
-            {% endif %}
-            &gt; {{ page.title }}
-        </div>
-        <div class=""></div>
+      <div class="wrapper">
+        {% if page.url == "/" %}
+          {% include home-header.html %}
         {% endif %}
 
-        {{ content }}
+        <section>
 
-      </section>
+          {% if page.url != "/" %}
+          <div class="breadcrumbs">
+              <a href="{{ "/" | relative_url }}">Home</a>
+              {% if page.collection %}
+                &gt; <a href="{{ '/' | append: page.collection | append: '/' | relative_url }}">{{ page.collection | capitalize }}</a>
+              {% endif %}
+              &gt; {{ page.title }}
+          </div>
+          <div class=""></div>
+          {% endif %}
+
+          {{ content }}
+
+        </section>
+
+      </div>
+
+      {% include footer.html %}
 
     </div>
-
-    {% include footer.html %}
-
   </body>
 </html>
