@@ -29,6 +29,11 @@ body {
   }
 }
 
+/* homeのナビゲーション内の箇条書きの記号 */
+.home-nav ul {
+  list-style: '†';
+}
+
 /* パンくずリスト */
 .breadcrumbs {
   margin-bottom: 20px;

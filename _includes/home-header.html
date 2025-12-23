@@ -15,7 +15,7 @@
   
   {% if site.nav %}
   <nav>
-      <ul>
+      <ul class="home-nav">
           {% for item in site.nav %}
           <li><b><a href="{{ item.url | relative_url }}">{{ item.title }}</a></b></li>
           {% endfor %}
