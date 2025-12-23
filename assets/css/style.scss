@@ -31,7 +31,7 @@ body {
 
 /* homeのナビゲーション内の箇条書きの記号 */
 .home-nav {
-  list-style-type: '&gt;';
+  list-style-type: '>';
 }
 
 /* パンくずリスト */
@@ -226,5 +226,10 @@ a:hover {
     width: 100%;
     margin: 0;
     padding: 0;
+  }
+  .wrapper.wide-layout header {
+    width: 100%;
+    float: none;
+    position: static;
   }
 }

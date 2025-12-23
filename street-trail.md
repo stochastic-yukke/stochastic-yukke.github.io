@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Street-Trail
+title: Street & Trail
 permalink: /street-trail/
 ---
 # Street & Trail Records
