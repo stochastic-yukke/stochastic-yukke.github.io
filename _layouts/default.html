@@ -4,17 +4,17 @@
     {% include head.html %}
   </head>
   <body>
-    <div class="wrapper {% if page.url != '/' %}wide-layout{% endif %}">
       {% if page.url != "/" %}
         <header class="global-header">
           {% include top-nav.html %}
         </header>
       {% endif %}
 
-      <div class="wrapper">
+      <div class="wrapper {% if page.url != '/' %}wide-layout{% endif %}"></div>
         {% if page.url == "/" %}
           {% include home-header.html %}
         {% endif %}
+
         <section>
 
           {% if page.url != "/" %}
@@ -25,13 +25,11 @@
               {% endif %}
               &gt; {{ page.title }}
           </div>
-          <div class=""></div>
           {% endif %}
 
           {{ content }}
 
         </section>
-      </div>
 
       {% include footer.html %}
 
