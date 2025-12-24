@@ -189,17 +189,17 @@ header h1 .poetic-line {
 }
 
 /* 本文のフォントの設定 */
-@import url('https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Shippori+Mincho:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,800;1,400&family=Sawarabi+Mincho&family=Shippori+Mincho:wght@800&display=swap');
 body {
-  font-family: "Sawarabi Mincho", serif;
+  font-family: "EB Garamond", "Sawarabi Mincho", serif;
   font-weight: 400;
   font-size: 1.1rem;
   line-height: 1.6;
   color: #333;
 }
-/* boldのみしっぽり明朝 */
+/* 日本語はboldのみしっぽり明朝 */
 b, strong {
-  font-family: "Shippori Mincho", serif;
+  font-family: "EB Garamond", "Shippori Mincho", serif;
   font-weight: 800;
 }
 /* スマホ等対応 */
@@ -235,6 +235,7 @@ a:hover {
   margin-top: 60px !important;
 }
 
+/* レイアウトシフト対策 */
 img {
   max-width: 100%;
   height: auto;
