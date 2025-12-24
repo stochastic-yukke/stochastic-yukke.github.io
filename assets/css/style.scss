@@ -217,9 +217,13 @@ b, strong {
     line-height: 1.8;
   }
   body {
-  font-family: "Sawarabi Mincho", "Shippori Mincho", serif;
+  font-family: "Sawarabi Mincho", serif;
   font-size: 0.9rem;
   line-height: 1.8;
+  }
+  b, strong {
+    font-family: "EB Garamond", "Shippori Mincho", serif;
+    font-weight: 800;
   }
 }
 
