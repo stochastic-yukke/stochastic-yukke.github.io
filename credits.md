@@ -16,4 +16,5 @@ Logo & Favicon were designed in Adobe Express using ***Rampart One Regular***. S
 ## Fonts
 In addition to ***Rampart One Regular***, the following fonts were used. Special thanks to the SIL Open Font License!
 - ***Sawarabi Mincho(さわらび明朝)***,
-- ***Shippori Mincho(しっぽり明朝): ExtraBold 800***.
+- ***Shippori Mincho(しっぽり明朝)***,
+- ***EB Garamond***.
