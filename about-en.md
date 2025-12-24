@@ -15,6 +15,6 @@ On this website, I write:
 
 This site's theme colour is Cosmic Latte `#FFF8E7`.<br>
 
-Currently, this site is available only in Japanese. I hope to provide English content in the future.
+Currently, this site is available only in Japanese. &gt;&gt; I hope to provide English content in the future.
 
 **[>> 日本語で読む](/about/)**
