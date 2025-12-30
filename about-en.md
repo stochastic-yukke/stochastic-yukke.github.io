@@ -10,7 +10,7 @@ I am a high school student in Japan, mainly interested in Mathematics.<br>
 On this website, I write:
 - Archives(A collection of PDFs focused on mathematics),
 - Marginalia(A collection of memos focused on mathematics),
-- Street-Trail(Records of Hikes and Walks).
+- Street & Trail(Records of Hikes and Walks).
 <br>
 
 This site's theme colour is Cosmic Latte `#FFF8E7`.<br>
