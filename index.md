@@ -31,7 +31,7 @@ Here are credits: **[Credits](/credits/)**<br>
 
 ---
 
-### Street-Trail
+### Street & Trail
 {% assign latest_trail = site.street-trail | sort: 'date' | reverse | first %}
 {% if latest_trail %}
   **[{{ latest_trail.title }}]({{ latest_trail.url }})** <small>({{ latest_trail.date | date: "%Y-%m-%d" }})</small><br>
