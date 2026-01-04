@@ -26,11 +26,13 @@ latex: true
 > $X$を(半)順序集合，$A$をその部分集合とする。$x$が$A$の極大元(maximal element)であるとは，$x \in A$かつ$\nexists y \in A \enspace \mathrm{s.t.} \enspace x < y$であることをいう。
 
 > **定義2（解析学における極大）**[^2]  
-> $n$次元ユークリッド空間$(\mathbb{R}^n, \, d)$の開集合$U$で定義された関数$f\colon U\to \mathbb{R}$を考える。関数$f$の，ある$p\in U$の$\epsilon$近傍への制限において，$f(p)$がその最大値になるとき，すなわち，<div>
+> $n$次元ユークリッド空間$(\mathbb{R}^n, \, d)$の開集合$U$で定義された関数$f\colon U\to \mathbb{R}$を考える。関数$f$の，ある$p\in U$の$\epsilon$近傍への制限において，$f(p)$がその最大値になるとき，すなわち，
+> <div>
 > $$
 >   \exists\epsilon > 0,\enspace\forall q\in U,\enspace d(p,q) < \epsilon\implies f(p) \geq f(q)
 > $$
-> </div>のとき，$f(p)$を$f$の極大値(local maximum)という。
+> </div>
+> のとき，$f(p)$を$f$の極大値(local maximum)という。
 
 この2つの定義はもちろん互いに異なるものだ。しかし，どちらも，比較が有意におこなえる《局所的》な範囲に限定して考えている，という点が共通ではないだろうか。極大値の方はわかりやすい。最大値が存在しない関数でも，《局所的》な範囲で最大になるところは定義することができる。英語の名前も"local maximum"だ。では，極大元の方はどのような意味で《局所的》か。
 
