@@ -3,38 +3,42 @@
 
 /* このscssファイルは，順に要素を追加していったため，設定の重複を含む可能性が高いです。齟齬が生じないようにしていますが，暇な時に修正します。 */
 @import "{{ site.theme }}";
-@import url('https://fonts.googleapis.com/css2?family=BIZ+UDP+Gothic&family=Noto+Sans:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Zen+Old+Mincho:wght@700;900&family=EB+Garamond:wght@400;800&family=Sawarabi+Mincho&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=BIZ+UDP+Gothic&family=Noto+Sans:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Noto+Serif+KR:wght@400;700&family=Zen+Old+Mincho:wght@700;900&family=EB+Garamond:wght@400;800&family=Sawarabi+Mincho&display=swap');
 
 :root {
   /* 装飾モード（デフォルト） */
-  --font-main-jp: 'Sawarabi Mincho', serif;
-  --font-main-en: 'EB Garamond Adjusted', 'EB Garamond';
-  --font-strong-jp: 'Zen Old Mincho', serif;
-  --font-strong-en: 'EB Garamond Adjusted', 'EB Garamond';
+  --font-base: 'EB Garamond Adjusted', 'EB Garamond', 'Sawarabi Mincho', 'Noto Serif KR', serif;
+  --font-strong: 'EB Garamond Adjusted', 'EB Garamond', 'Zen Old Mincho', 'Noto Serif KR', serif;
   --bg-color: #FFF8E7;
   --text-color: #222;
   --link-color: #9F353A;
   --link-hover: #329F81;
+  --quote-bar: #9F353A;
+  --quote-bg: #FDF3E1;
+  --quote-border: #9F353A;
+  --quote-text: #333333;
+  --code-bg: #F4ECE1;
+  --code-border: #E5D5C5;
+  --code-text: #333333;
 }
 body.ud-mode {
-  --font-main-jp: 'BIZ UDP Gothic', 'Noto Sans JP', sans-serif;
-  --font-main-en: 'Noto Sans', Arial, Helvetica;
-  --font-strong-jp: 'BIZ UDP Gothic', 'Noto Sans JP', sans-serif;
-  --font-strong-en: 'Noto Sans', Arial, Helvetica;
+  --font-base: 'Noto Sans', Arial, Helvetica, 'BIZ UDP Gothic', 'Noto Sans JP', 'Noto Sans KR', sans-serif;
+  --font-strong: 'Noto Sans', Arial, Helvetica, 'BIZ UDP Gothic', 'Noto Sans JP', 'Noto Sans KR', sans-serif;
   --bg-color: #FAFAFA;
   --text-color: #222;
   --link-color: #005bac;
   --link-hover: #008cce;
-}
-
-.wrapper {
-  max-width: 1200px !important;
-  width: 94%;
-  margin: 0 auto;
+  --quote-bar: #005bac;
+  --quote-bg: #FFFFFF;
+  --quote-border: #005bac;
+  --quote-text: #111111;
+  --code-bg: #FFFFFF;
+  --code-border: #888888;
+  --code-text: #000000;
 }
 
 body {
-  font-family: var(--font-main-en), var(--font-main-jp);
+  font-family: var(--font-base);
   background-color: var(--bg-color);
   color: var(--text-color);
   font-size: 1.1rem;
@@ -48,7 +52,33 @@ body :lang(fr),
 body :lang(de),
 body :lang(it),
 body :lang(es) {
-  font-family: var(--font-main-en), serif !important;
+  font-family: var(--font-base), serif !important;
+}
+b, strong {
+  font-family: var(--font-strong);
+  font-weight: 900;
+}
+
+/* EB Garamondのカスタム */
+@font-face {
+  font-family: 'EB Garamond Adjusted';
+  size-adjust: 110%;
+  src: url('/assets/fonts/EBGaramond-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'EB Garamond Adjusted';
+  size-adjust: 110%;
+  src: url('/assets/fonts/EBGaramond-ExtraBold.woff2') format('woff2');
+  font-weight: 800;
+  font-display: swap;
+}
+
+.wrapper {
+  max-width: 1200px !important;
+  width: 94%;
+  margin: 0 auto;
 }
 
 /* PC表示時 */
@@ -230,27 +260,6 @@ header h1 .poetic-line {
   }
 }
 
-/* フォントの設定 */
-/* EB Garamondのカスタム */
-@font-face {
-  font-family: 'EB Garamond Adjusted';
-  size-adjust: 110%;
-  src: url('/assets/fonts/EBGaramond-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'EB Garamond Adjusted';
-  size-adjust: 110%;
-  src: url('/assets/fonts/EBGaramond-ExtraBold.woff2') format('woff2');
-  font-weight: 800;
-  font-display: swap;
-}
-b, strong {
-  font-family: var(--font-strong-en), var(--font-strong-jp);
-  font-weight: 900;
-}
-
 /* スマホ等対応 */
 @media screen and (max-width: 768px) {
   body {
@@ -266,11 +275,7 @@ a, a:visited {
   text-decoration: none;
   transition: color 0.3s ease;
 }
-a:hover {
-  color: var(--link-hover);
-}
-
-/* hoverしたときの下線アニメーション */
+/* 本文内リンクの下線 */
 section a:not(.breadcrumbs a) {
   position: relative;
 }
@@ -284,16 +289,77 @@ section a:not(.breadcrumbs a)::after {
   background-color: var(--link-hover);
   transition: width 0.3s ease, background-color 0.3s ease;
 }
-section a:not(.breadcrumbs a):hover::after {
-  width: 100%;
-}
-/* UDモードでの指定 */
+/* UDモードのリンクの振る舞い */
 body.ud-mode section a:not(.breadcrumbs a)::after {
   width: 100%;
   background-color: var(--link-color);
 }
-body.ud-mode section a:not(.breadcrumbs a):hover::after {
-  background-color: var(--link-hover);
+body.ud-mode .site-footer a {
+  color: var(--link-color);
+}
+
+/* ホバー時の動作 */
+@media (hover: hover) {
+  a:hover {
+    color: var(--link-hover);
+  }
+  .site-footer a:hover {
+    color: var(--link-hover);
+  }
+  /* アニメーション */
+  section a:not(.breadcrumbs a):hover::after {
+    width: 100%;
+  }
+  body.ud-mode section a:not(.breadcrumbs a):hover::after {
+    background-color: var(--link-hover);
+  }
+}
+
+/* BlockQuoteとCodeBlockのスタイル */
+blockquote {
+  margin: 1.5em 0;
+  padding: 1em 1.5em;
+  color: var(--quote-text);
+  background-color: var(--quote-bg);
+  border: 1px solid var(--quote-border);
+  border-left: 6px solid var(--quote-border);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  font-style: normal;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+blockquote p:first-child {
+  margin-top: 0;
+}
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+code, pre {
+  font-family: 'Courier New', Consolas, Monaco, monospace;
+}
+pre {
+  background-color: var(--code-bg);
+  border: 1px solid var(--code-border);
+  color: var(--code-text);
+  padding: 1em;
+  border-radius: 6px;
+  overflow-x: auto;
+  line-height: 1.5;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+pre code {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+p code, li code {
+  background-color: var(--code-bg);
+  border: 1px solid var(--code-border);
+  color: var(--code-text);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 /* Home以外のページのレイアウト */
@@ -318,14 +384,45 @@ img {
   height: auto;
 }
 
-blockquote {
-  border-left: 4px solid #9F353A;
-  background-color: rgba(159, 53, 58, 0.05);
-  padding: 10px 20px;
-  margin-bottom: 20px;
-  color: #2F3437;
-  font-style: normal;
-  > :last-child {
-    margin-bottom: 0;
-  }
+/* 数学用の環境 */
+body {
+  counter-reset: def thm lem cor prop;
 }
+.def, .thm, .lem, .cor, .prop {
+  margin: 1.5em 0;
+  padding: 1em 1.5em;
+  color: var(--quote-text);
+  background-color: var(--quote-bg);
+  border: 1px solid var(--quote-border);
+  border-left: 6px solid var(--quote-border);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  font-style: normal;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+.def { counter-increment: def; }
+.thm { counter-increment: thm; }
+.lem { counter-increment: lem; }
+.cor { counter-increment: cor; }
+.prop { counter-increment: prop; }
+/* 名称のスタイル */
+.def::before, .thm::before, .lem::before, .cor::before, .prop::before {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5em;
+}
+/* 引数 == null */
+.def::before { content: "定義 " counter(def) "."; }
+.thm::before { content: "定理 " counter(thm) "."; }
+.lem::before { content: "補題 " counter(lem) "."; }
+.cor::before { content: "系 " counter(cor) "."; }
+.prop::before { content: "命題 " counter(prop) "."; }
+/* 引数 == data-title */
+.def[data-title]::before { content: "定義 " counter(def) " (" attr(data-title) ")."; }
+.thm[data-title]::before { content: "定理 " counter(thm) " (" attr(data-title) ")."; }
+.lem[data-title]::before { content: "補題 " counter(lem) " (" attr(data-title) ")."; }
+.cor[data-title]::before { content: "系 " counter(cor) " (" attr(data-title) ")."; }
+.prop[data-title]::before { content: "命題 " counter(prop) " (" attr(data-title) ")."; }
+/* 空白の調整をしとく */
+.def p:first-of-type, .thm p:first-of-type, .lem p:first-of-type, .cor p:first-of-type, .prop p:first-of-type { margin-top: 0; }
+.def p:last-of-type, .thm p:last-of-type, .lem p:last-of-type, .cor p:last-of-type, .prop p:last-of-type { margin-bottom: 0; }
