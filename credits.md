@@ -16,14 +16,22 @@ Logo & Favicon were designed in Adobe Express using ***Rampart One Regular***. S
 ## Fonts
 In addition to ***Rampart One Regular***, the following fonts were used. Special thanks to the SIL Open Font License!
 - ***Sawarabi Mincho(さわらび明朝)***,
-- ***Shippori Mincho(しっぽり明朝)***,
+- ***Zen Old Mincho(ZENオールド明朝)***,
+- ***BIZ UDPGothic(BIZ UDPゴシック)***,
+- ***BIZ UDMincho(BIZ UD明朝)***,
+- ***Noto Sans JP***,
+- ***Noto Sans***,
 - ***EB Garamond***.
 <br>
 
-さわらび明朝を使うと，句読点やコロンが綺麗に表示され，点字を書くのにも好適ですね：<br>
+## Icons
+Dice icon provided by [Untitled UI](https://www.untitledui.com/icons) (Free version),\\
+Octcat icon provided by [GitHub](https://brand.github.com/foundations/logo).
+
+Google Fontsのさわらび明朝のページの例文が点字になっていましたが，点字を書くのに好適なのかもしれません(点がきれいに詰まっていて空白と点との区別がしやすい？)。Comma, Colonのバランスも結構好きです。<br>
 ：；：，。  
 :;:,..,:  
-⠝⠕ ⠕⠝⠑ ⠎⠓⠁⠇⠇ ⠃⠑ ⠓⠑⠇⠙
+<span style="font-size: 200%; ">⠭⠕⠕⠐⠧⠀⠻⠴⠺⠒⠎⠀⠱⠴⠡⠐⠡⠀⠊⠪⠙⠀⠪⠞⠎⠀⠅⠃⠀⠜⠒⠇⠀⠹⠙</span>
 <br>
 
-ところで，私は装飾が施されたフォントが好きですが，そういうフォントの文字をスムーズに読むのが苦手で，私以外にもそういう人はたくさんいると思います。そこで，余暇ができたら，UDフォントまたはそれに近いフォントとの切り替えができるようにしたいです。
+ちなみに，Home以外のページで右上に出ている賽子(dice)のアイコンをクリックすると，サイトのテーマが切り替わるようになっています。
