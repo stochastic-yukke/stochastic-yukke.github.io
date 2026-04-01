@@ -3,6 +3,7 @@ layout: default
 title: "curryingと加群と"
 date: 2026-02-13
 latex: true
+genre: Mathematics
 ---
 
 この記事では主に，currying（カリー化）という操作を通して，いくつかの数学的対象を捉え直す。
