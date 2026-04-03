@@ -6,7 +6,6 @@ permalink: /marginalia/
 
 Marginaliaとは，本などの欄外への書き込みや傍注を意味します。まあ，そんな感じです。
 
-# Marginalia List
 <div class="marginalia-accordion">
   {% assign genres = site.marginalia | map: "genre" | uniq | sort_natural %}
   {% for genre in genres %}
