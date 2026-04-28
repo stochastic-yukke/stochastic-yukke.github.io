@@ -12,7 +12,7 @@
   --bg-color: #FFF8E7;
   --text-color: #222;
   --link-color: #9F353A;
-  --link-hover: #329F81;
+  --link-hover: #359F9A;
   --quote-bar: #9F353A;
   --quote-bg: #FDF3E1;
   --quote-border: #9F353A;
@@ -311,6 +311,16 @@ body.ud-mode .site-footer a {
   .site-nav li a {
     transition: none !important;
   }
+}
+
+/* selectionのcolor設定 */
+body:not(.ud-mode) ::-moz-selection {
+  background-color: #2F3437;
+  color: #fff8e7;
+}
+body:not(.ud-mode) ::selection {
+  background-color: #2F3437;
+  color: #fff8e7;
 }
 
 /* BlockQuoteとCodeBlockのスタイル */
