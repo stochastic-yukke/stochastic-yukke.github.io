@@ -14,10 +14,12 @@ genre: Mathematics
 <div class="def" data-title="左A加群，left A-module">
   $A$を環とするとき，左$A$加群(left A-module)とは，アーベル群$(M,+)$と，スカラー倍演算$A\times M\ni (a,x) \mapsto a\cdot x \in M$で，次の性質をみたすものである：
   $a,b\in A,\, x,y\in M$に対し，
-  - $a\cdot (x + y) = a\cdot x + a\cdot y$
-  - $1\cdot x = x$
-  - $(a+b)\cdot x = a\cdot x+b\cdot x$
-  - $(ab)\cdot x=a\cdot(b\cdot x)$
+  <ul>
+    <li>$a\cdot (x + y) = a\cdot x + a\cdot y$</li>
+    <li>$1\cdot x = x$</li>
+    <li>$(a+b)\cdot x = a\cdot x+b\cdot x$</li>
+    <li>$(ab)\cdot x=a\cdot(b\cdot x)$</li>
+  </ul>
 </div>
 
 本によると現代数学は，構成より機能を重視する立場にあるようだが，それにぞぐわないのはもちろんである。そして実際，機能の面が前面に押し出された，もっと（少し難解だが）直感的な定義がある。

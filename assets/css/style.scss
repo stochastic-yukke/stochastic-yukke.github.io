@@ -315,13 +315,77 @@ body.ud-mode .site-footer a {
 
 /* selectionのcolor設定 */
 body:not(.ud-mode) ::-moz-selection {
-  background-color: #2F3437;
+  background-color: #2f3437;
   color: #fff8e7;
 }
 body:not(.ud-mode) ::selection {
-  background-color: #2F3437;
+  background-color: #2f3437;
   color: #fff8e7;
 }
+
+/* 特殊なcursorを設定 */
+/* デフォルトのcursorを非表示 */
+body:not(.ud-mode) {
+  &, a, button, input, textarea, summary {
+    cursor: none !important;
+  }
+  #cursor, #cursor-canvas {
+    display: block;
+  }
+}
+body.ud-mode {
+  #cursor, #cursor-canvas {
+    display: none;
+  }
+}
+
+/* 以下，カスタムcursorの設定 */
+#cursor-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;// 色反転
+}
+
+/* カーソルに追従する円 */
+#cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  box-sizing: border-box;
+  transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+              height 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+              background-color 0.3s, border 0.3s;
+  will-change: transform;
+
+  /* ホバー時 */
+  &.is-hover {
+    width: 48px;
+    height: 48px;
+    background-color: transparent;
+    border: 1.2px solid #fff;
+  }
+}
+
+#cursor-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10000;
+}
+
 
 /* BlockQuoteとCodeBlockのスタイル */
 blockquote {
@@ -511,3 +575,14 @@ body {
 /* 空白の調整をしとく */
 .def p:first-of-type, .thm p:first-of-type, .lem p:first-of-type, .cor p:first-of-type, .prop p:first-of-type { margin-top: 0; }
 .def p:last-of-type, .thm p:last-of-type, .lem p:last-of-type, .cor p:last-of-type, .prop p:last-of-type { margin-bottom: 0; }
+
+/* ロゴによるテーマ切替アニメーション */
+.site-logo.ud-toggle-anim {
+  animation: logo-expand-shrink 0.5s cubic-bezier(0.4,1.4,0.6,1) both;
+}
+@keyframes logo-expand-shrink {
+  0%   { transform: scale(1,1); }
+  30%  { transform: scale(1.15,0.9); }
+  60%  { transform: scale(0.95,1.12); }
+  100% { transform: scale(1,1); }
+}
