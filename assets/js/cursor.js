@@ -5,11 +5,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const ctx = canvas.getContext('2d');
 
-  let mouse = { x: -100, y: -100 };
+  const savedX = localStorage.getItem('cursorX');
+  const savedY = localStorage.getItem('cursorY');
+
+  let mouse = {
+    x: savedX ? parseFloat(savedX) : -100,
+    y: savedY ? parseFloat(savedY) : -100
+  };
   let particles = [];
   let pathPoints = []; // 座標の履歴を保持
   let moveTimeout;     // マウスの停止を検知
   let isDrawing = false;
+
+  if (savedX && savedY) {
+    const initialSize = 26;
+    cursor.style.transform = `translate(${mouse.x - initialSize/2}px, ${mouse.y - initialSize/2}px)`;
+  }
 
   // Canvasをresize
   function resizeCanvas() {
@@ -39,8 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
     mouse.x = e.clientX;
     mouse.y = e.clientY;
 
+    localStorage.setItem('cursorX', mouse.x);
+    localStorage.setItem('cursorY', mouse.y);
+
     const isHover = cursor.classList.contains('is-hover');
-    const size = isHover ? 48 : 30;
+    const size = isHover ? 30 : 24;
     const offset = size / 2;
 
     cursor.style.transform = `translate(${mouse.x - offset}px, ${mouse.y - offset}px)`;
@@ -84,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     constructor(x, y) {
       this.x = x;
       this.y = y;
-      this.size = 15;
+      this.size = 12;
       this.life = 1;
       this.decay = 0.025;
     }

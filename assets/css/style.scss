@@ -138,8 +138,8 @@ body.ud-mode .site-footer a {
   max-width: 250px;
   width: 100%;
   height: auto;
-  margin-top: -15px;
-  margin-bottom: -10px;
+  margin-top: -30px;
+  margin-bottom: -5px;
 }
 
 /* GitHubアイコンのスタイル */
@@ -356,21 +356,21 @@ body.ud-mode {
   position: absolute;
   top: 0;
   left: 0;
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   background-color: #fff;
   border-radius: 50%;
   pointer-events: none;
   box-sizing: border-box;
-  transition: width 0.3s cubic-bezier(0.23, 1, 0.32, 1),
-              height 0.3s cubic-bezier(0.23, 1, 0.32, 1),
-              background-color 0.3s, border 0.3s;
+  transition: width 0.1s cubic-bezier(0.23, 1, 0.32, 1),
+              height 0.1s cubic-bezier(0.23, 1, 0.32, 1),
+              background-color 0.1s, border 0.1s;
   will-change: transform;
 
   /* ホバー時 */
   &.is-hover {
-    width: 48px;
-    height: 48px;
+    width: 30px;
+    height: 30px;
     background-color: transparent;
     border: 1.2px solid #fff;
   }
