@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const isTouchDevice = window.matchMedia("(any-hover: none)").matches || 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  if (isTouchDevice) return;
+
   const cursor = document.getElementById('cursor');
   const canvas = document.getElementById('cursor-canvas');
   if (!cursor || !canvas) return;

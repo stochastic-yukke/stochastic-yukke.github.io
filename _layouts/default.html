@@ -3,7 +3,7 @@
   <head>
     {% include head.html %}
   </head>
-  <body>
+  <body class="{{ page.body_class }}">
       {% if page.url != "/" %}
         <header class="global-header">
           {% include top-nav.html %}

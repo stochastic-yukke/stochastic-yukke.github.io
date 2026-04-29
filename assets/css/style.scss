@@ -213,9 +213,6 @@ header h1, header h1 a {
   font-family: 'BIZ UDMincho', serif;
   font-weight: 700;
   font-size: 3.2rem;
-
-  color: #9F353A;
-
   letter-spacing: 0.05em;
   text-decoration: none;
   line-height: 1.3;
@@ -261,6 +258,19 @@ header h1 .poetic-line {
   body {
     font-size: 0.9rem;
     line-height: 1.8;
+  }
+}
+
+/* PCではHomeページの.site-footerの区切り線を消去 */
+@media print, screen and (min-width: 960px) {
+  body.home .site-footer {
+    border-top: none !important;
+  }
+}
+/* スマホ等: .site-footerの区切り線を消去 */
+@media screen and (max-width: 959px) {
+  .site-footer {
+    border-top: none !important;
   }
 }
 
@@ -325,17 +335,24 @@ body:not(.ud-mode) ::selection {
 
 /* 特殊なcursorを設定 */
 /* デフォルトのcursorを非表示 */
-body:not(.ud-mode) {
-  &, a, button, input, textarea, summary {
-    cursor: none !important;
+@media (hover: hover) and (pointer: fine) {
+  body:not(.ud-mode) {
+    &, a, button, input, textarea, summary {
+      cursor: none !important;
+    }
+    #cursor, #cursor-canvas {
+      display: block;
+    }
   }
-  #cursor, #cursor-canvas {
-    display: block;
+  body.ud-mode {
+    #cursor, #cursor-canvas {
+      display: none;
+    }
   }
 }
-body.ud-mode {
-  #cursor, #cursor-canvas {
-    display: none;
+@media (hover: none), (pointer: coarse) {
+  #cursor-wrapper, #cursor, #cursor-canvas {
+    display: none !important;
   }
 }
 
@@ -350,7 +367,6 @@ body.ud-mode {
   z-index: 10000;
   mix-blend-mode: difference;// 色反転
 }
-
 /* カーソルに追従する円 */
 #cursor {
   position: absolute;
@@ -375,7 +391,6 @@ body.ud-mode {
     border: 1.2px solid #fff;
   }
 }
-
 #cursor-canvas {
   position: fixed;
   top: 0;
