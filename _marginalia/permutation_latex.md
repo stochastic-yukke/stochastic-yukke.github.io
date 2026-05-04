@@ -7,4 +7,5 @@ genre: Nonsense
 ---
 
 - $\text{a}=\text{A}$とすれば(?)，$(\text{L}\, \text{e}\, \text{a}) \left\( \LaTeX \right\) = \text{eLTAX}$（eLTAXは地方税ポータルシステムのこと）,
+- 「王の町」と「魔王の血」
 - （以下ほんとうに暇な時に追記）.
