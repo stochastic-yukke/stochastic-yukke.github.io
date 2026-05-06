@@ -3,7 +3,7 @@
 
 /* このscssファイルは，順に要素を追加していったため，設定の重複を含む可能性が高いです。齟齬が生じないようにしていますが，暇な時に修正します。 */
 @import "{{ site.theme }}";
-@import url('https://fonts.googleapis.com/css2?family=BIZ+UDP+Gothic&family=Noto+Sans:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Noto+Serif+KR:wght@400;700&family=Zen+Old+Mincho:wght@700;900&family=EB+Garamond:wght@400;800&family=Sawarabi+Mincho&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=BIZ+UDP+Gothic&family=Noto+Sans:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+KR:wght@400;700&family=Noto+Serif+KR:wght@400;700&family=Zen+Old+Mincho:wght@900&family=EB+Garamond:wght@400;800&family=Sawarabi+Mincho&display=swap');
 
 :root {
   /* 装飾モード（デフォルト） */
@@ -277,6 +277,7 @@ header h1 .poetic-line {
 /* リンクの色とかホバー時のアニメーションとかの設定(backgroundとして処理して複数行に対応させた) */
 a, a:visited {
   font-weight: bolder;
+  font-family: var(--font-strong);
   color: var(--link-color);
   text-decoration: none;
   transition: color 0.3s ease;

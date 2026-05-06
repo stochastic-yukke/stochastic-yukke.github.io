@@ -28,8 +28,14 @@ In addition to ***Rampart One Regular***, the following fonts were used. Special
 Dice icon provided by [Untitled UI](https://www.untitledui.com/icons) (Free version),\\
 Octcat icon provided by [GitHub](https://brand.github.com/foundations/logo).
 
-Google Fontsのさわらび明朝のページの例文が点字になっていましたが，点字を書くのに好適なのかもしれません(点がきれいに詰まっていて空白と点との区別がしやすい？)。Comma, Colonのバランスも結構好きです。<br>
+---
+
+## おまけ
+
+本文用フォントの1つとして使っているさわらび明朝は，明朝体のなかではマイナーですが，例えば[キハラ株式会社](https://www.kihara-lib.co.jp)のサイトの見出しに使われているのを見つけました。
+
+ところで，Google Fontsのさわらび明朝のページの例文が点字になっていましたが，点字を書くのに好適なのかもしれません(点がきれいに詰まっていて空白と点との区別がしやすい？)。Comma, Colonのバランスも結構好きです。<br>
 ：；：，。  
 :;:,..,:  
-<span style="font-size: 200%; ">⠭⠕⠕⠐⠧⠀⠻⠴⠺⠒⠎⠀⠱⠴⠡⠐⠡⠀⠊⠪⠙⠀⠪⠞⠎⠀⠅⠃⠀⠜⠒⠇⠀⠹⠙</span>
+<span style="font-size: 200%; ">⠭⠕⠕⠐⠧⠀⠻⠴⠺⠒⠎⠀⠱⠴⠡⠐⠡⠀⠊⠪⠙⠀⠪⠞⠎⠀⠅⠃⠀⠜⠒⠇⠀⠹⠙</span>» 再び戦争の惨禍が起ることのないやうにする «
 <br>

@@ -8,7 +8,7 @@ genre: Language
 
 - LineはLinenから来ている!?
 - Book, Beech, Buche(ドイツ語)は同語源!?
-- Biscuitって"Bis+Cook"ってことなの!?(Bisは，ビスチオスルファト銀(Ⅰ)酸イオン$\ce{[Ag(S2O3)2]^3-}$とかからも分かる通り，「2回」というような意味をもつラテン語由来の語；「2度焼かれたもの」ということになる)ちなみに，お菓子メーカーさんもおっしゃってます([森永ビスケット(森永製菓株式会社)](https://www.morinaga.co.jp/biscuit/story/column/1.html))。
+- Biscuitって "Bis+Cook" ってことなの (Bisは，ビス(チオスルファト)銀(Ⅰ)酸イオン$\ce{[Ag(S2O3)2]^3-}$とかからも分かる通り，「2回」というような意味をもつラテン語由来の語；biscuitは「2度焼かれたもの」ということになる)!? ちなみに，お菓子メーカーさんもおっしゃってます([森永ビスケット(森永製菓株式会社)](https://www.morinaga.co.jp/biscuit/story/column/1.html))。
 - roleはroll(というかrolle)から来ている!?
 - spermと，(Αναξαγοραςがἀρχήとしたことで有名な) spermata は同語源!?
 - spaはベルギーの有名な温泉の名前から来ている!?
@@ -24,6 +24,6 @@ genre: Language
   なるほど，と思うわけだが，別の情報源，例えばテキトーに[wikipedia](https://en.wikipedia.org/wiki/Basel)を見てみると結構違うことが書いてある。よくわからない。このwikipediaのページで言えばNameの項目に詳しく書いてあるが，かなり由来は曖昧なようなので，ここではバーゼルの由来に関して議論することはせず，関連する語源を紹介するだけにしよ。
 
     脚注に書いてある通り，ギリシア語 βασιλεύς/basileús(vasiléfs) は，「王」や「君主」を意味する；
-    - ハリポタ(Harry Potterのことです←~~説明するくらいなら略さず書けばいいのに~~)でお馴染みのバジリスクは，もともとヨーロッパで伝承されてきた存在だが，語としては，βασιλεύς(王) + -ίσκος という，βασιλεύς の diminutive の形であるそうだ([etymonline](https://www.etymonline.com/word/basilisk)等)。
+    - ハリポタ(Harry Potterのことです←~~説明するくらいなら略さず書けばいいのに~~)でお馴染みのバジリスクは，もともとヨーロッパで伝承されてきた存在だが，語としては，βασιλεύς(王) + -ίσκος という，βασιλεύς の diminutive の形であるそうだ([etymonline](https://www.etymonline.com/word/basilisk)，[ΛΟΓΕΙΟΝ](https://logeion.uchicago.edu/%CE%B2%CE%B1%CF%83%CE%B9%CE%BB%CE%AF%CF%83%CE%BA%CE%BF%CF%82)等)。
     - 有名かもしれないが，バジル(英語ではbasil ←/ˈbæzəl/って読むやつね)も，βασιλεύςから来ているんだそうな(同上 等)。
 - 
