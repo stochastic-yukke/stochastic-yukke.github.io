@@ -9,7 +9,7 @@ latex: true
 
 {%include embed-pdf.html %}
 
-内容としては，Freshman's Dreamと呼ばれる等式を出発点に，Frobenius写像を足掛かりにしながら，類体論の入り口的なことを書いている。最後はおまけ程度に，Lucasの定理と素数判定アルゴリズムAKS判定法の話。
+PDFが見えない場合は，[こちら](https://github.com/stochastic-yukke/sukenbushi2025/blob/main/tex-pdf-files/main.pdf)。内容としては，Freshman's Dreamと呼ばれる等式を出発点に，Frobenius写像を足掛かりにしながら，類体論の入り口的なことを書いている。最後はおまけ程度に，Lucasの定理と素数判定アルゴリズムAKS判定法の話。
 
 ここからは，余談。
 

@@ -9,7 +9,7 @@ Welcome to my website!<br>
 I am a high school student, mainly interested in Mathematics.<br>
 On this website, I write:
 - Archives(A collection of PDFs focused on mathematics),
-- Marginalia(A collection of memos focused on mathematics),
+- Marginalia(A collection of memos),
 - Street & Trail(Records of Hikes and Walks).
 <br>
 
