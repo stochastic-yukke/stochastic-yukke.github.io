@@ -1,7 +1,17 @@
+/* Oradano明朝：サイト名のみに使用。scripts/subset_fonts.pyでサイト名の文字だけに絞ったものをpublic/fontsに作成 */
+@font-face {
+  font-family: "Oradano Title";
+  src: url("/fonts/oradano-subset.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 設計値 */
 :root {
   color-scheme: light;
 
-  --paper: #f5f2ea;
+  --paper: #f5f2eb;
   --ink: #1e2433;
   --ink-soft: #5a6172;
   --rule: #d2cdc0;
@@ -10,9 +20,10 @@
   --measure: 38em;
   --gutter: clamp(1.1rem, 5vw, 2.5rem);
 
-  --font-latin: "Latin Modern Roman", "Palatino", "Times New Roman";
-  --font-ja: "Toppan Bunkyu Mincho", "凸版文久明朝", "Hiragino Mincho ProN",
-    "Yu Mincho", "Noto Serif JP";
+  --font-latin: "STIX Two Text", "Palatino", "Times New Roman";
+  --font-ja: "Toppan Bunkyu Mincho", "凸版文久明朝", "Shippori Mincho",
+    "Hiragino Mincho ProN", "Yu Mincho";
+  --font-title: "Oradano Title", var(--font-latin), var(--font-ja);
 }
 
 /* 基本 */
@@ -65,6 +76,16 @@ main {
 .site-header a {
   color: var(--ink);
   text-decoration: none;
+}
+
+.site-name {
+  font-family: var(--font-title);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+
+.site-header .site-name {
+  font-size: 1.35em;
 }
 
 .site-footer {
@@ -164,11 +185,12 @@ pre {
   line-height: 1.6;
 }
 
-/* KaTeX設定 */
+/* KaTeX */
 .katex {
   font-size: 1.05em;
 }
 
+/* ディスプレイ数式の横スクロール */
 .katex-display {
   margin: 1.1em 0;
   padding-block: 0.2em;
@@ -177,6 +199,7 @@ pre {
 }
 
 /* 定理環境 */
+/* <div class="theorem">をかく */
 main {
   counter-reset: thm;
 }
@@ -200,7 +223,6 @@ main {
   counter-increment: thm;
 }
 
-/* 見出しの語を本文の1行目に続けて置く */
 .theorem::before,
 .lemma::before,
 .proposition::before,
@@ -233,7 +255,7 @@ main {
 .remark::before { content: "注意."; }
 .proof::before { content: "証明."; font-weight: 400; }
 
-/* ハルモス */
+/* 墓石記号 */
 .proof > p:last-child::after {
   content: "\220E";
   float: right;

@@ -1,4 +1,9 @@
 ---
+import '@fontsource/stix-two-text/400.css';
+import '@fontsource/stix-two-text/400-italic.css';
+import '@fontsource/stix-two-text/600.css';
+import '@fontsource/shippori-mincho/400.css';
+import '@fontsource/shippori-mincho/600.css';
 import 'katex/dist/katex.min.css';
 import '../styles/global.css';
 
@@ -7,7 +12,8 @@ const { frontmatter, title: titleProp } = Astro.props;
 const isNote = Boolean(frontmatter);
 const title = titleProp ?? frontmatter?.title;
 
-const siteName = '真砂なす';
+// scripts/subset_fonts.pyが読み取る値；書き換えたらスクリプトを再実行してねー。
+const siteName = '真砂なす数なき山巓の';
 const pageTitle = title ? `${title} | ${siteName}` : siteName;
 ---
 
@@ -21,7 +27,7 @@ const pageTitle = title ? `${title} | ${siteName}` : siteName;
   </head>
   <body>
     <header class="site-header">
-      <a href="/">{siteName}</a>
+      <a href="/"><span class="site-name">{siteName}</span></a>
     </header>
 
     <main>
@@ -37,7 +43,7 @@ const pageTitle = title ? `${title} | ${siteName}` : siteName;
     </main>
 
     <footer class="site-footer">
-      &copy; {new Date().getFullYear()} {siteName}
+      &copy; {new Date().getFullYear()} <span class="site-name">{siteName}</span>
     </footer>
   </body>
 </html>
