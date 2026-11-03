@@ -1,0 +1,43 @@
+---
+import 'katex/dist/katex.min.css';
+import '../styles/global.css';
+
+// Markdownページではfrontmatterを渡す。Astroページではtitleを直接渡す。
+const { frontmatter, title: titleProp } = Astro.props;
+const isNote = Boolean(frontmatter);
+const title = titleProp ?? frontmatter?.title;
+
+const siteName = '真砂なす';
+const pageTitle = title ? `${title} | ${siteName}` : siteName;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f2eb" />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a href="/">{siteName}</a>
+    </header>
+
+    <main>
+      {
+        isNote && (
+          <>
+            <h1>{title}</h1>
+            {frontmatter.date && <p class="meta">{frontmatter.date}</p>}
+          </>
+        )
+      }
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      &copy; {new Date().getFullYear()} {siteName}
+    </footer>
+  </body>
+</html>

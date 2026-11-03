@@ -1,0 +1,241 @@
+:root {
+  color-scheme: light;
+
+  --paper: #f5f2ea;
+  --ink: #1e2433;
+  --ink-soft: #5a6172;
+  --rule: #d2cdc0;
+  --link: #2b4a87;
+
+  --measure: 38em;
+  --gutter: clamp(1.1rem, 5vw, 2.5rem);
+
+  --font-latin: "Latin Modern Roman", "Palatino", "Times New Roman";
+  --font-ja: "Toppan Bunkyu Mincho", "凸版文久明朝", "Hiragino Mincho ProN",
+    "Yu Mincho", "Noto Serif JP";
+}
+
+/* 基本 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* 16px-19px */
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.1875rem);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-latin), var(--font-ja), serif;
+  line-height: 1.95;
+  line-break: strict;
+  overflow-wrap: break-word;
+  font-kerning: normal;
+}
+
+.site-header,
+main,
+.site-footer {
+  width: min(100% - 2 * var(--gutter), var(--measure));
+  margin-inline: auto;
+}
+
+main {
+  flex: 1;
+}
+
+/* header, footer */
+.site-header {
+  padding-block: 1.6em 1em;
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-header a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.site-footer {
+  margin-top: 4em;
+  padding-block: 1em 2em;
+  border-top: 1px solid var(--rule);
+  color: var(--ink-soft);
+  font-size: 0.85em;
+}
+
+/* 見出し */
+h1,
+h2,
+h3 {
+  line-height: 1.5;
+  font-weight: 600;
+  text-wrap: balance;
+  font-feature-settings: "palt";
+}
+
+h1 {
+  font-size: clamp(1.45rem, 1.1rem + 1.4vw, 2rem);
+  margin: 1.8em 0 0.4em;
+}
+
+h2 {
+  font-size: 1.25em;
+  margin: 2.4em 0 0.5em;
+}
+
+h3 {
+  font-size: 1.05em;
+  margin: 2em 0 0.3em;
+}
+
+.meta {
+  margin: 0 0 2em;
+  color: var(--ink-soft);
+  font-size: 0.9em;
+}
+
+/* 本文 */
+p {
+  margin: 0 0 1em;
+  text-align: justify;
+  text-wrap: pretty;
+}
+
+ul,
+ol {
+  margin: 0 0 1em;
+  padding-left: 1.6em;
+}
+
+li {
+  margin: 0.15em 0;
+}
+
+a {
+  color: var(--link);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 2.5em 0;
+}
+
+blockquote {
+  margin: 1.2em 0;
+  padding-left: 1em;
+  border-left: 2px solid var(--rule);
+  color: var(--ink-soft);
+}
+
+pre,
+code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.88em;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 0.8em 1em;
+  background: rgba(30, 36, 51, 0.05);
+  line-height: 1.6;
+}
+
+/* KaTeX設定 */
+.katex {
+  font-size: 1.05em;
+}
+
+.katex-display {
+  margin: 1.1em 0;
+  padding-block: 0.2em;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* 定理環境 */
+main {
+  counter-reset: thm;
+}
+
+.theorem,
+.lemma,
+.proposition,
+.corollary,
+.definition,
+.example,
+.remark,
+.proof {
+  margin: 1.4em 0;
+}
+
+.theorem,
+.lemma,
+.proposition,
+.corollary,
+.definition {
+  counter-increment: thm;
+}
+
+/* 見出しの語を本文の1行目に続けて置く */
+.theorem::before,
+.lemma::before,
+.proposition::before,
+.corollary::before,
+.definition::before,
+.example::before,
+.remark::before,
+.proof::before {
+  margin-right: 0.6em;
+  font-weight: 600;
+}
+
+.theorem > p:first-child,
+.lemma > p:first-child,
+.proposition > p:first-child,
+.corollary > p:first-child,
+.definition > p:first-child,
+.example > p:first-child,
+.remark > p:first-child,
+.proof > p:first-child {
+  display: inline;
+}
+
+.theorem::before { content: "定理 " counter(thm) "."; }
+.lemma::before { content: "補題 " counter(thm) "."; }
+.proposition::before { content: "命題 " counter(thm) "."; }
+.corollary::before { content: "系 " counter(thm) "."; }
+.definition::before { content: "定義 " counter(thm) "."; }
+.example::before { content: "例."; }
+.remark::before { content: "注意."; }
+.proof::before { content: "証明."; font-weight: 400; }
+
+/* ハルモス */
+.proof > p:last-child::after {
+  content: "\220E";
+  float: right;
+  margin-left: 1em;
+}
