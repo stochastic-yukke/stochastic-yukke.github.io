@@ -39,7 +39,7 @@ $\sigma \in \Gal(L/E')$ は $E'$ の元をすべて固定する。$E \subset E'$
 幅の広い式は，画面からはみ出さずに，その式の中だけ横にスクロールできる。
 
 $$
-\prod_{p \,:\, \text{prime}} \frac{1}{1-p^{-s}} = \sum_{n=1}^{\infty} \frac{1}{n^{s}} = \zeta(s) \quad (\mathrm{Re}\, s > 1),\qquad \zeta(2) = \frac{\pi^{2}}{6} = 1.6449\ldots, \qquad H_q(X,\mathbb{Z}) \equiv H_{q-1}(X, \mathbb{Z}), \qquad asdfgbgfgfesdg
+\prod_{p \,:\, \text{prime}} \frac{1}{1-p^{-s}} = \sum_{n=1}^{\infty} \frac{1}{n^{s}} = \zeta(s) \quad (\mathrm{Re}\, s > 1),\qquad \zeta(2) = \frac{\pi^{2}}{6} = 1.6449\ldots, \qquad H_q(S^n,\mathbb{Z}) \simeq H_{q-1}(S^{n-1}, \mathbb{Z}), \qquad asdfgbgfgfesdg
 $$
 
 </div>

@@ -49,6 +49,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-latin), var(--font-ja), serif;
+  font-weight: 500;;
   line-height: 1.95;
   line-break: strict;
   overflow-wrap: break-word;
@@ -261,6 +262,7 @@ main {
   isolation: isolate;
   width: fit-content;
   padding-right: 1em;
+  padding-left: 1em;
 }
 
 .theorem::after,
@@ -390,21 +392,23 @@ main {
   height: 5.2rem;
   padding-block: 0;
   border-bottom: 0;
-  background: var(--paper);
+  background: transparent;
 }
 
 .js .has-hero .site-header::after {
   content: "";
   position: absolute;
-  inset: auto 0 0 0;
-  height: 1px;
-  background: var(--rule);
-  opacity: var(--p);
+  inset: 0;
+  z-index: -1;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  opacity: clamp(0, calc((var(--p) - .9) * 4), 1);
 }
 
 .js .has-hero .site-header .site-name {
   font-size: 1em;
   letter-spacing: 0;
+  color: color-mix(in srgb, var(--ink) calc(var(--p) * 100%), var(--paper));
 }
 
 .js .has-hero .ch {
@@ -436,6 +440,23 @@ main {
   min-height: 70svh;
 }
 
+.night-sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-color: #0b101d;
+  transform: translateY(calc(var(--p) * -20vh));
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to top, transparent calc(var(--p) * 150% - 50%), black calc(var(--p) * 150%));
+  mask-image: linear-gradient(to top, transparent calc(var(--p) * 150% - 50%), black calc(var(--p) * 150%));
+}
+
+#starfield {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 /* Scroll Indicator */
 .scroll-indicator {
   position: absolute;
@@ -446,7 +467,7 @@ main {
   flex-direction: column;
   align-items: center;
   gap: 0.6em;
-  color: var(--ink-soft);
+  color: var(--paper);
   font-family: var(--font-latin);
   font-size: 0.85em;
   letter-spacing: 0.1em;
