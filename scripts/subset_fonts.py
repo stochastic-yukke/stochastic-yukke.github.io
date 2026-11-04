@@ -9,6 +9,7 @@
     sh -c "pip install -q fonttools brotli && python scripts/subset_fonts.py"
 
 サイト名（src/layouts/Layout.astro の siteName）を変えたときだけ、もう一度実行する。
+できた public/fonts/oradano-subset.woff2 は、リポジトリに入れておく。
 """
 
 import os
@@ -48,7 +49,7 @@ def main():
 
     opts = subset.Options()
     opts.flavor = "woff2"
-    opts.name_IDs = ["*"]
+    opts.name_IDs = ["*"]  # ライセンス表記などの名前情報を残す
     opts.notdef_outline = True
     font = subset.load_font(src, opts)
     sub = subset.Subsetter(opts)

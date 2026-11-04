@@ -20,7 +20,7 @@
   --gutter: clamp(1.1rem, 5vw, 2.5rem);
 
   --font-latin: "STIX Two Text", "Palatino", "Times New Roman";
-  --font-ja: "Toppan Bunkyu Mincho", "凸版文久明朝", "Harano Aji Mincho", "原ノ味明朝",
+  --font-ja: "Toppan Bunkyu Mincho", "凸版文久明朝", "Noto Serif JP",
     "Hiragino Mincho ProN", "Yu Mincho";
   --font-title: "Oradano Title", var(--font-latin), var(--font-ja);
 }
@@ -37,6 +37,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   background: var(--paper);
+  overscroll-behavior: none; /* ページの端でスクロールを止める（跳ね返らない） */
 }
 
 body {
@@ -69,6 +70,7 @@ main {
 .site-header {
   padding-block: 1.6em 1em;
   border-bottom: 1px solid var(--rule);
+  text-align: center;
 }
 
 .site-header a {
@@ -92,6 +94,25 @@ main {
   border-top: 1px solid var(--rule);
   color: var(--ink-soft);
   font-size: 0.85em;
+  text-align: center;
+}
+
+/* SNSアイコン用のスタイル */
+.sns-links {
+  margin-bottom: 1em;
+}
+.sns-links a {
+  display: inline-flex;
+  color: var(--ink-soft);
+  transition: color 0.2s ease;
+}
+.sns-links a:hover {
+  color: var(--ink);
+  text-decoration: none;
+}
+.sns-links a svg {
+  width: 1.2em;
+  height: 1.2em;
 }
 
 /* 見出し */
@@ -212,6 +233,38 @@ main {
   margin: 1.4em 0;
 }
 
+/* 定理・補題・命題・系：右下に蔦 */
+.theorem,
+.lemma,
+.proposition,
+.corollary {
+  position: relative;
+  isolation: isolate;
+}
+
+.theorem::after,
+.lemma::after,
+.proposition::after,
+.corollary::after {
+  content: "";
+  position: absolute;
+  right: 1em;
+  bottom: -1em;
+  z-index: -1;
+  width: min(10em, 50%);
+  aspect-ratio: 2 / 1;
+  background: url("/images/leaf-green.webp") no-repeat right bottom / contain;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* 証明の左の縦棒 */
+.proof {
+  padding-left: .5em;
+  margin-right: 1em;
+  border-left: 2px solid var(--ink-soft);
+}
+
 .remark, .example {
   font-size: 0.8em;
   margin-right: 1.5em;
@@ -222,7 +275,9 @@ main {
 .lemma,
 .proposition,
 .corollary,
-.definition {
+.definition,
+.example,
+.remark {
   counter-increment: thm;
 }
 
@@ -236,6 +291,7 @@ main {
 .proof::before {
   margin-right: .6em;
   font-weight: 800;
+  text-decoration: underline;
 }
 
 .theorem > p:first-child,
@@ -256,7 +312,7 @@ main {
 .definition::before { content: "Def " counter(thm) "."; }
 .example::before { content: "Exm " counter(thm) "."; }
 .remark::before { content: "Rem " counter(thm) "."; }
-.proof::before { content:   "Proof " counter(thm) "."; }
+.proof::before { content: "Proof"; }
 
 .remark .katex {
   font-size: 1em;
@@ -266,9 +322,76 @@ main {
   font-size: 1em;
 }
 
+.proof > p:last-child {
+  position: relative;
+  padding-right: 1.5em;
+}
+
 /* 墓石記号 */
 .proof > p:last-child::after {
   content: "\220E";
-  float: right;
-  margin-left: 1em;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+
+/* トップページのhero */
+:root {
+  --hero-size: clamp(2.6rem, 14vw, 4.2rem); /* 縦書きのときの1字の大きさ */
+  --head-size: 1.35rem;
+  --p: 0;
+}
+
+.js .has-hero .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 5.2rem;
+  padding-block: 0;
+  border-bottom: 0;
+  background: var(--paper);
+}
+
+.js .has-hero .site-header::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: var(--rule);
+  opacity: var(--p);
+}
+
+.js .has-hero .site-header .site-name {
+  font-size: 1em;
+  letter-spacing: 0;
+}
+
+.js .has-hero .ch {
+  /* 文字ごとの進み具合。先頭の字から順に動き出し，なめらかに加減速 */
+  --t: clamp(0, calc(var(--p) * 1.45 - var(--k) * 0.05), 1);
+  --e: calc(var(--t) * var(--t) * (3 - 2 * var(--t)));
+
+  --lv: calc(50% + (1 - var(--g)) * 1.45 * var(--hero-size));
+  --tv: calc(42svh + (var(--r) - 1.5) * 1.1 * var(--hero-size));
+  --lh: calc((var(--k) + 0.5) * 1.06 * var(--head-size));
+  --th: 2.9rem;
+
+  position: absolute;
+  left: calc(var(--lv) + (var(--lh) - var(--lv)) * var(--e));
+  top: calc(var(--tv) + (var(--th) - var(--tv)) * var(--e));
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-align: center;
+  translate: -50% -50%;
+  font-size: calc(var(--hero-size) + (var(--head-size) - var(--hero-size)) * var(--e));
+}
+
+.js .has-hero .hero-spacer {
+  height: calc(100svh - 5.2rem);
+}
+
+.js .has-hero main {
+  min-height: 70svh;
 }

@@ -2,19 +2,32 @@
 import '@fontsource/stix-two-text/400.css';
 import '@fontsource/stix-two-text/400-italic.css';
 import '@fontsource/stix-two-text/600.css';
-import '@fontsource/shippori-mincho/400.css';
-import '@fontsource/shippori-mincho/600.css';
+import '@fontsource/noto-serif-jp/400.css';
+import '@fontsource/noto-serif-jp/600.css';
 import 'katex/dist/katex.min.css';
 import '../styles/global.css';
 
 // Markdownページではfrontmatterを渡す。Astroページではtitleを直接渡す。
-const { frontmatter, title: titleProp } = Astro.props;
+// hero: トップページ用
+const { frontmatter, title: titleProp, hero = false } = Astro.props;
 const isNote = Boolean(frontmatter);
 const title = titleProp ?? frontmatter?.title;
 
-// scripts/subset_fonts.pyが読み取る値；書き換えたらスクリプトを再実行してねー。
+// scripts/subset_fonts.pyが読み取る値；書き換えたらスクリプトを再実行してねー
 const siteName = '真砂なす数なき山顚の';
 const pageTitle = title ? `${title} | ${siteName}` : siteName;
+
+// hero用: サイト名を縦書きで並べる列の字数
+const heroSplit = [4, 3, 3];
+const heroChars = [...siteName].map((ch, k) => {
+  let g = 0;
+  let r = k;
+  while (g < heroSplit.length - 1 && r >= heroSplit[g]) {
+    r -= heroSplit[g];
+    g += 1;
+  }
+  return { ch, k, g, r };
+});
 ---
 
 <!doctype html>
@@ -24,11 +37,29 @@ const pageTitle = title ? `${title} | ${siteName}` : siteName;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f5f2eb" />
     <title>{pageTitle}</title>
+    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
-  <body>
+  <body class={hero ? 'has-hero' : undefined}>
     <header class="site-header">
-      <a href="/"><span class="site-name">{siteName}</span></a>
+      {
+        hero ? (
+          <a class="site-title" href="/" aria-label={siteName}>
+            <span class="site-name" aria-hidden="true">
+              {heroChars.map((c) => (
+                <span class="ch" style={`--k:${c.k};--g:${c.g};--r:${c.r}`}>
+                  {c.ch}
+                </span>
+              ))}
+            </span>
+          </a>
+        ) : (
+          <a class="site-title" href="/">
+            <span class="site-name">{siteName}</span>
+          </a>
+        )
+      }
     </header>
+    {hero && <div class="hero-spacer" aria-hidden="true" />}
 
     <main>
       {
@@ -43,7 +74,38 @@ const pageTitle = title ? `${title} | ${siteName}` : siteName;
     </main>
 
     <footer class="site-footer">
-      &copy; {new Date().getFullYear()} <span class="site-name">{siteName}</span>
+      <div class="sns-links">
+        <a href="https://x.com/_stochastikke" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
+          </svg>
+        </a>
+      </div>
+      <div class="copyright">
+        &copy; {new Date().getFullYear()} <span class="site-name">{siteName}</span>
+      </div>
     </footer>
+
+    <script is:inline>
+      // トップページ（hero）だけで動く
+      (function () {
+        if (!document.querySelector('.has-hero')) return;
+        var root = document.documentElement;
+        var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var ticking = false;
+        function update() {
+          ticking = false;
+          var p = Math.min(Math.max(scrollY / (innerHeight * 0.6), 0), 1);
+          if (reduce) p = scrollY > 40 ? 1 : 0; // 動きを減らす設定：段階的に変えず、一度に切り替える
+          root.style.setProperty('--p', p.toFixed(4));
+        }
+        function onScroll() {
+          if (!ticking) { ticking = true; requestAnimationFrame(update); }
+        }
+        addEventListener('scroll', onScroll, { passive: true });
+        addEventListener('resize', onScroll);
+        update();
+      })();
+    </script>
   </body>
 </html>

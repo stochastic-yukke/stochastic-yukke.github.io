@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.5",
-    "@fontsource/shippori-mincho": "^5.3.0",
+    "@fontsource/noto-serif-jp": "^5.3.1",
     "@fontsource/stix-two-text": "^5.3.0",
     "astro": "^7.4.5",
     "katex": "^0.19.1",
