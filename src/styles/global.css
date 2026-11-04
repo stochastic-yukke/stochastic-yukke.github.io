@@ -7,7 +7,6 @@
   font-display: swap;
 }
 
-/* 設計値 */
 :root {
   color-scheme: light;
 
@@ -21,12 +20,11 @@
   --gutter: clamp(1.1rem, 5vw, 2.5rem);
 
   --font-latin: "STIX Two Text", "Palatino", "Times New Roman";
-  --font-ja: "Toppan Bunkyu Mincho", "凸版文久明朝", "Shippori Mincho",
+  --font-ja: "Toppan Bunkyu Mincho", "凸版文久明朝", "Harano Aji Mincho", "原ノ味明朝",
     "Hiragino Mincho ProN", "Yu Mincho";
   --font-title: "Oradano Title", var(--font-latin), var(--font-ja);
 }
 
-/* 基本 */
 *,
 *::before,
 *::after {
@@ -190,7 +188,6 @@ pre {
   font-size: 1.05em;
 }
 
-/* ディスプレイ数式の横スクロール */
 .katex-display {
   margin: 1.1em 0;
   padding-block: 0.2em;
@@ -232,7 +229,6 @@ main {
 .remark::before,
 .proof::before {
   margin-right: 0.6em;
-  font-weight: 600;
 }
 
 .theorem > p:first-child,
@@ -253,7 +249,7 @@ main {
 .definition::before { content: "定義 " counter(thm) "."; }
 .example::before { content: "例."; }
 .remark::before { content: "注意."; }
-.proof::before { content: "証明."; font-weight: 400; }
+.proof::before { content: "証明."; }
 
 /* 墓石記号 */
 .proof > p:last-child::after {
