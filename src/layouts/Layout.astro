@@ -118,21 +118,7 @@ const heroChars = [...siteName].map((ch, k) => {
         if (canvas) {
           var ctx = canvas.getContext('2d');
           var stars = [];
-          function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            stars = [];
-            for (var i = 0; i < 200; i++) { // 星の数
-              stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                r: Math.random() * 1.5, // 星の大きさ
-                a: Math.random() // 透明度
-              });
-            }
-          }
-          addEventListener('resize', resizeCanvas);
-          resizeCanvas();
+          var lastWidth = 0; // 横幅の変更判定用
 
           function drawStars() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -143,7 +129,28 @@ const heroChars = [...siteName].map((ch, k) => {
               ctx.fill();
             }
           }
-          drawStars();
+
+          function resizeCanvas() {
+            // 横幅が変わっていない場合（スマホの縦スクロールによる高さ変化）は処理をスキップ
+            if (window.innerWidth === lastWidth && stars.length > 0) return;
+            lastWidth = window.innerWidth;
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            stars = [];
+            for (var i = 0; i < 200; i++) {
+              stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 1.2,
+                a: Math.random()
+              });
+            }
+            drawStars(); // リセット後に再描画を実行
+          }
+
+          addEventListener('resize', resizeCanvas);
+          resizeCanvas();
         }
 
         update();
