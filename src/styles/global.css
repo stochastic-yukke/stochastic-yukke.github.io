@@ -11,10 +11,10 @@
   color-scheme: light;
 
   --paper: #f5f2eb;
-  --ink: #1e2433;
+  --ink: #252f46;
   --ink-soft: #5a6172;
   --rule: #d2cdc0;
-  --link: #2b4a87;
+  --link: #a22c32;
 
   --measure: 38em;
   --gutter: clamp(1.1rem, 5vw, 2.5rem);
@@ -212,6 +212,12 @@ main {
   margin: 1.4em 0;
 }
 
+.remark, .example {
+  font-size: 0.8em;
+  margin-right: 1.5em;
+  margin-left: 1em;
+}
+
 .theorem,
 .lemma,
 .proposition,
@@ -228,7 +234,8 @@ main {
 .example::before,
 .remark::before,
 .proof::before {
-  margin-right: 0.6em;
+  margin-right: .6em;
+  font-weight: 800;
 }
 
 .theorem > p:first-child,
@@ -242,14 +249,22 @@ main {
   display: inline;
 }
 
-.theorem::before { content: "定理 " counter(thm) "."; }
-.lemma::before { content: "補題 " counter(thm) "."; }
-.proposition::before { content: "命題 " counter(thm) "."; }
-.corollary::before { content: "系 " counter(thm) "."; }
-.definition::before { content: "定義 " counter(thm) "."; }
-.example::before { content: "例."; }
-.remark::before { content: "注意."; }
-.proof::before { content: "証明."; }
+.theorem::before { content: "Thm " counter(thm) "."; }
+.lemma::before { content: "Lem " counter(thm) "."; }
+.proposition::before { content: "Prop " counter(thm) "."; }
+.corollary::before { content: "Cor " counter(thm) "."; }
+.definition::before { content: "Def " counter(thm) "."; }
+.example::before { content: "Exm " counter(thm) "."; }
+.remark::before { content: "Rem " counter(thm) "."; }
+.proof::before { content:   "Proof " counter(thm) "."; }
+
+.remark .katex {
+  font-size: 1em;
+}
+
+.example .katex {
+  font-size: 1em;
+}
 
 /* 墓石記号 */
 .proof > p:last-child::after {

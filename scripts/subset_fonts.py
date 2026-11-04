@@ -48,7 +48,7 @@ def main():
 
     opts = subset.Options()
     opts.flavor = "woff2"
-    opts.name_IDs = ["*"]  # ライセンス表記などの名前情報を残す
+    opts.name_IDs = ["*"]
     opts.notdef_outline = True
     font = subset.load_font(src, opts)
     sub = subset.Subsetter(opts)
