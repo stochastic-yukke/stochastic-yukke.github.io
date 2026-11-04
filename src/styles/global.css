@@ -97,22 +97,41 @@ main {
   text-align: center;
 }
 
-/* SNSアイコン用のスタイル */
+/* SNSアイコン */
 .sns-links {
   margin-bottom: 1em;
 }
+
 .sns-links a {
   display: inline-flex;
-  color: var(--ink-soft);
-  transition: color 0.2s ease;
+  color: #1da1f2;
+  transition: color 0.15s ease;
 }
-.sns-links a:hover {
-  color: var(--ink);
-  text-decoration: none;
+
+.sns-links a .logo-x {
+  display: none;
 }
+
 .sns-links a svg {
-  width: 1.2em;
-  height: 1.2em;
+  width: 1.8em;
+  height: 1.8em;
+  transform: translateY(0.5em);
+}
+
+/* PC等のみ( joke :) ) */
+@media (hover: hover) {
+  .sns-links a:hover {
+    color: #000000;
+    text-decoration: none;
+  }
+
+  .sns-links a:hover .logo-bird {
+    display: none;
+  }
+
+  .sns-links a:hover .logo-x {
+    display: block;
+  }
 }
 
 /* 見出し */
@@ -240,6 +259,8 @@ main {
 .corollary {
   position: relative;
   isolation: isolate;
+  width: fit-content;
+  padding-right: 1em;
 }
 
 .theorem::after,
@@ -254,8 +275,26 @@ main {
   width: min(10em, 50%);
   aspect-ratio: 2.5 / 1;
   background: url("/images/leaf-green.webp") no-repeat right bottom / contain;
-  opacity: 0.3;
+  opacity: 0.7;
   pointer-events: none;
+}
+
+/* 左上の蔦 */
+.theorem > *:first-child::after,
+.lemma > *:first-child::after,
+.proposition > *:first-child::after,
+.corollary > *:first-child::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1em;
+  z-index: -.5;
+  width: min(10em, 50%);
+  aspect-ratio: 2.5 / 1;
+  background: url("/images/leaf-green.webp") no-repeat right bottom / contain;
+  opacity: 0.5;
+  pointer-events: none;
+  transform: rotate(180deg);
 }
 
 /* 証明の左の縦棒 */
@@ -395,4 +434,35 @@ main {
 
 .js .has-hero main {
   min-height: 70svh;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--ink-soft);
+  font-family: var(--font-latin);
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  pointer-events: none;
+  opacity: calc(1 - var(--p) * 5);
+}
+
+.scroll-indicator::after {
+  content: "";
+  width: 1px;
+  height: 3.5em;
+  background: currentColor;
+  animation: scroll-bob 2s infinite ease-in-out;
+}
+
+@keyframes scroll-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
 }
