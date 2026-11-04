@@ -248,11 +248,11 @@ main {
 .corollary::after {
   content: "";
   position: absolute;
-  right: 1em;
+  right: 0em;
   bottom: -1em;
-  z-index: -1;
+  z-index: -.5;
   width: min(10em, 50%);
-  aspect-ratio: 2 / 1;
+  aspect-ratio: 2.5 / 1;
   background: url("/images/leaf-green.webp") no-repeat right bottom / contain;
   opacity: 0.3;
   pointer-events: none;
@@ -333,6 +333,7 @@ main {
   position: absolute;
   right: 0;
   bottom: 0;
+  transform: translateY(0.5em);
 }
 
 
