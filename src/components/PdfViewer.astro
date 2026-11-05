@@ -1,0 +1,526 @@
+---
+// タグで書くなら <PdfViewer file="/pdf/[name].pdf" /> で指定
+interface Props {
+  file: string;
+}
+const { file } = Astro.props;
+---
+
+<div class="pdf-viewer-root" data-pdf-viewer data-file={file}>
+  <div class="pdf-toolbar" role="toolbar" aria-label="PDFビューワの操作">
+    <button type="button" data-act="outline" aria-expanded="false" aria-controls="pdf-outline" disabled>目次</button>
+
+    <button type="button" data-act="prev" aria-label="前のページ">‹</button>
+    <label class="pdf-page">
+      <input type="number" min="1" value="1" inputmode="numeric" aria-label="ページ番号" data-page />
+      <span>/ <span data-count>–</span></span>
+    </label>
+    <button type="button" data-act="next" aria-label="次のページ">›</button>
+
+    <span class="pdf-spacer"></span>
+
+    <button type="button" data-act="zoom-out" aria-label="縮小">−</button>
+    <button type="button" data-act="zoom-in" aria-label="拡大">＋</button>
+    <button type="button" data-act="fit">幅に合わせる</button>
+    <button type="button" data-act="search" aria-expanded="false" aria-controls="pdf-search" title="検索 (Ctrl/⌘ + F)">検索</button>
+    <a class="pdf-download" href={file} download>ダウンロード</a>
+  </div>
+
+  <div class="pdf-search" id="pdf-search" hidden>
+    <input type="search" placeholder="PDF内を検索" aria-label="PDF内を検索" autocomplete="off" data-search />
+    <button type="button" data-act="find-prev" aria-label="前の一致" title="前の一致 (Shift + Enter)">↑</button>
+    <button type="button" data-act="find-next" aria-label="次の一致" title="次の一致 (Enter)">↓</button>
+    <span class="pdf-matches" data-matches aria-live="polite"></span>
+    <button type="button" data-act="find-close" aria-label="検索を閉じる" title="閉じる (Esc)">×</button>
+  </div>
+
+  <div class="pdf-stage">
+    <nav class="pdf-outline" id="pdf-outline" aria-label="目次" hidden></nav>
+    <div class="pdf-container" tabindex="0">
+      <div class="pdfViewer"></div>
+    </div>
+    <p class="pdf-status" data-status>読み込み中…</p>
+  </div>
+</div>
+
+<script>
+  import * as pdfjsLib from 'pdfjs-dist';
+  import { EventBus, PDFLinkService, PDFFindController, PDFViewer } from 'pdfjs-dist/web/pdf_viewer.mjs';
+  import 'pdfjs-dist/web/pdf_viewer.css';
+  import workerSrc from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
+
+  // PDF内の目次1項目
+  type OutlineItem = { title: string; dest: any; url?: string | null; items?: OutlineItem[] };
+  type MatchCount = { current: number; total: number };
+
+  const NARROW = '(max-width: 45.99rem)';
+
+  async function init(root: HTMLElement) {
+    const q = <T extends HTMLElement>(s: string) => root.querySelector(s) as T;
+    const container = q<HTMLDivElement>('.pdf-container');
+    const stage = q<HTMLDivElement>('.pdf-stage');
+    const input = q<HTMLInputElement>('[data-page]');
+    const count = q<HTMLElement>('[data-count]');
+    const status = q<HTMLElement>('[data-status]');
+    const outlinePanel = q<HTMLElement>('.pdf-outline');
+    const outlineBtn = q<HTMLButtonElement>('[data-act="outline"]');
+    const searchBar = q<HTMLElement>('.pdf-search');
+    const searchInput = q<HTMLInputElement>('[data-search]');
+    const searchBtn = q<HTMLButtonElement>('[data-act="search"]');
+    const matches = q<HTMLElement>('[data-matches]');
+
+    // 同じサイトの .pdf だけを開く；外部指定は受け付けない
+    const url = new URL(root.dataset.file ?? '', location.href);
+    if (url.origin !== location.origin || !url.pathname.endsWith('.pdf')) {
+      status.textContent = 'このPDFは開けません。';
+      return;
+    }
+
+    const m = location.hash.match(/^#page=(\d+)$/);
+    const initialPage = m ? parseInt(m[1], 10) : 1;
+
+    const eventBus = new EventBus();
+    const linkService = new PDFLinkService({ eventBus });
+    const findController = new PDFFindController({ eventBus, linkService });
+    const viewer = new PDFViewer({
+      container,
+      eventBus,
+      linkService,
+      findController,
+      removePageBorders: true,
+    });
+    linkService.setViewer(viewer);
+
+    // 倍率：「幅に合わせる」のときは，画面幅が変わっても追従
+    let fit = true;
+    const fitWidth = () => {
+      fit = true;
+      viewer.currentScaleValue = 'page-width';
+    };
+    const zoomBy = (factor: number) => {
+      fit = false;
+      viewer.currentScale = Math.min(4, Math.max(0.3, viewer.currentScale * factor));
+    };
+
+    // 目次パネルの開閉などで枠の大きさが変わったときも，ここでfollow
+    let raf = 0;
+    new ResizeObserver(() => {
+      if (!fit || !viewer.pdfDocument) return;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => (viewer.currentScaleValue = 'page-width'));
+    }).observe(container);
+
+    // ページ番号
+    let ready = false;
+    let timer = 0;
+    eventBus.on('pagechanging', (e: { pageNumber: number }) => {
+      input.value = String(e.pageNumber);
+      if (!ready) return;
+      // 位置をURLに残す，頻繁に書き換えないよう間引く
+      clearTimeout(timer);
+      timer = window.setTimeout(() => history.replaceState(null, '', `#page=${e.pageNumber}`), 400);
+    });
+
+    eventBus.on('pagesinit', () => {
+      count.textContent = String(viewer.pagesCount);
+      input.max = String(viewer.pagesCount);
+      fitWidth();
+      viewer.currentPageNumber = Math.min(Math.max(initialPage, 1), viewer.pagesCount);
+      status.hidden = true;
+      ready = true;
+    });
+
+    const goTo = (n: number) => {
+      if (Number.isNaN(n)) {
+        input.value = String(viewer.currentPageNumber);
+        return;
+      }
+      viewer.currentPageNumber = Math.min(Math.max(n, 1), viewer.pagesCount);
+    };
+    input.addEventListener('change', () => goTo(parseInt(input.value, 10)));
+
+    // 目次
+    const setOutline = (open: boolean) => {
+      outlinePanel.hidden = !open;
+      stage.dataset.outline = open ? 'open' : 'closed';
+      outlineBtn.setAttribute('aria-expanded', String(open));
+    };
+
+    const goToOutline = (item: OutlineItem) => {
+      if (item.dest) {
+        linkService.goToDestination(item.dest);
+      } else if (item.url) {
+        window.open(item.url, '_blank', 'noopener');
+      }
+      if (matchMedia(NARROW).matches) setOutline(false);
+    };
+
+    const renderOutline = (items: OutlineItem[], parent: HTMLElement) => {
+      const ul = document.createElement('ul');
+      for (const item of items) {
+        const li = document.createElement('li');
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = item.title || '（無題）';
+        b.addEventListener('click', () => goToOutline(item));
+        li.append(b);
+        if (item.items?.length) renderOutline(item.items, li);
+        ul.append(li);
+      }
+      parent.append(ul);
+    };
+
+    // 検索
+    let lastQuery = '';
+    let findTimer = 0;
+
+    const dispatchFind = (type: '' | 'again', previous = false) => {
+      const query = searchInput.value;
+      if (!query) {
+        clearFind();
+        return;
+      }
+      lastQuery = query;
+      eventBus.dispatch('find', {
+        source: root,
+        type,
+        query,
+        caseSensitive: false,
+        entireWord: false,
+        highlightAll: true,
+        findPrevious: previous,
+        matchDiacritics: false,
+      });
+    };
+
+    // ハイライトと件数の表示を消去
+    const clearFind = () => {
+      lastQuery = '';
+      matches.textContent = '';
+      eventBus.dispatch('findbarclose', { source: root });
+    };
+
+    const openSearch = () => {
+      searchBar.hidden = false;
+      searchBtn.setAttribute('aria-expanded', 'true');
+      searchInput.focus();
+      searchInput.select();
+      if (searchInput.value) dispatchFind('');
+    };
+
+    const closeSearch = () => {
+      if (searchBar.hidden) return;
+      searchBar.hidden = true;
+      searchBtn.setAttribute('aria-expanded', 'false');
+      clearFind();
+      container.focus({ preventScroll: true });
+    };
+
+    const showCount = (c: MatchCount) => {
+      if (c && c.total > 0) matches.textContent = `${c.current} / ${c.total}`;
+    };
+    eventBus.on('updatefindmatchescount', (e: { matchesCount: MatchCount }) => showCount(e.matchesCount));
+    eventBus.on('updatefindcontrolstate', (e: { state: number; matchesCount: MatchCount }) => {
+      // state: 0=見つかった, 1=見つからない, 2=先頭に戻った, 3=検索中
+      if (e.state === 1) matches.textContent = '見つかりません';
+      else if (e.state === 3) matches.textContent = '検索中…';
+      else showCount(e.matchesCount);
+    });
+
+    searchInput.addEventListener('input', () => {
+      clearTimeout(findTimer);
+      findTimer = window.setTimeout(() => dispatchFind(''), 250);
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      clearTimeout(findTimer);
+      dispatchFind(searchInput.value === lastQuery ? 'again' : '', e.shiftKey);
+    });
+
+    // ボタン
+    root.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLElement>('button[data-act]');
+      if (!b) return;
+      switch (b.dataset.act) {
+        case 'prev': viewer.previousPage(); break;
+        case 'next': viewer.nextPage(); break;
+        case 'zoom-in': zoomBy(1.15); break;
+        case 'zoom-out': zoomBy(1 / 1.15); break;
+        case 'fit': fitWidth(); break;
+        case 'outline': setOutline(outlinePanel.hidden); break;
+        case 'search': searchBar.hidden ? openSearch() : closeSearch(); break;
+        case 'find-next': dispatchFind(searchInput.value === lastQuery ? 'again' : '', false); break;
+        case 'find-prev': dispatchFind(searchInput.value === lastQuery ? 'again' : '', true); break;
+        case 'find-close': closeSearch(); break;
+      }
+    });
+
+    // 検索欄のキーボード
+    document.addEventListener('keydown', (e) => {
+      if (!(e.ctrlKey || e.metaKey) || e.key.toLowerCase() !== 'f') return;
+      const active = document.activeElement;
+      if (root.contains(active) || active === document.body) {
+        e.preventDefault();
+        openSearch();
+      }
+    });
+
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!searchBar.hidden) closeSearch();
+        else if (!outlinePanel.hidden) setOutline(false);
+        return;
+      }
+
+      if ((e.target as HTMLElement).closest('input, textarea')) return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+      // 拡大して横にはみ出しているときは，矢印キーを横スクロールに使う
+      const canScrollX = container.scrollWidth > container.clientWidth + 1;
+      switch (e.key) {
+        case 'ArrowLeft':
+          if (!canScrollX) { viewer.previousPage(); e.preventDefault(); }
+          break;
+        case 'ArrowRight':
+          if (!canScrollX) { viewer.nextPage(); e.preventDefault(); }
+          break;
+        case '+':
+        case '=':
+          zoomBy(1.15); e.preventDefault();
+          break;
+        case '-':
+          zoomBy(1 / 1.15); e.preventDefault();
+          break;
+        case '0':
+          fitWidth(); e.preventDefault();
+          break;
+      }
+    });
+
+    // 読み込み
+    try {
+      const doc = await pdfjsLib.getDocument({ url: url.href }).promise;
+      viewer.setDocument(doc);
+      linkService.setDocument(doc, null);
+
+      const outline = (await doc.getOutline()) as OutlineItem[] | null;
+      if (outline && outline.length > 0) {
+        renderOutline(outline, outlinePanel);
+        outlineBtn.disabled = false;
+      } else {
+        outlineBtn.title = 'このPDFには目次（しおり）がありません';
+      }
+    } catch (err) {
+      console.error(err);
+      status.innerHTML = 'PDFを読み込めませんでした。<a href="' + url.href + '">PDFを直接開く</a>';
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-pdf-viewer]').forEach(init);
+</script>
+
+<style is:global>
+  /* ビューワは本文の幅より広く */
+  .pdf-viewer-root {
+    position: relative;
+    left: 50%;
+    translate: -50%;
+    width: min(100vw - 2 * var(--gutter), 52rem);
+    margin-block: 1em 2em;
+    font-size: 0.85em;
+  }
+
+  .pdf-toolbar,
+  .pdf-search {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5em;
+    padding-bottom: 0.6em;
+  }
+
+  .pdf-search[hidden],
+  .pdf-outline[hidden],
+  .pdf-status[hidden] {
+    display: none;
+  }
+
+  .pdf-spacer {
+    flex: 1;
+  }
+
+  .pdf-viewer-root button,
+  .pdf-toolbar .pdf-download {
+    padding: 0.15em 0.8em;
+    border: 1px solid var(--rule);
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    line-height: 1.7;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .pdf-viewer-root button:hover:not(:disabled),
+  .pdf-toolbar .pdf-download:hover {
+    background: rgba(37, 47, 70, 0.06);
+  }
+
+  .pdf-viewer-root button:disabled {
+    color: var(--ink-soft);
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .pdf-viewer-root button[aria-expanded='true'] {
+    background: rgba(37, 47, 70, 0.1);
+  }
+
+  .pdf-viewer-root button:focus-visible,
+  .pdf-viewer-root input:focus-visible,
+  .pdf-container:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+  }
+
+  .pdf-page {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4em;
+  }
+
+  .pdf-page input,
+  .pdf-search input {
+    padding: 0.1em 0.2em;
+    border: 0;
+    border-bottom: 1px solid var(--ink-soft);
+    background: transparent;
+    color: var(--ink);
+    font: inherit;
+  }
+
+  .pdf-page input {
+    width: 3.4em;
+    text-align: center;
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  .pdf-page input::-webkit-inner-spin-button {
+    appearance: none;
+  }
+
+  .pdf-search input {
+    flex: 1;
+    min-width: 8em;
+    max-width: 22em;
+  }
+
+  .pdf-matches {
+    min-width: 5em;
+    color: var(--ink-soft);
+  }
+
+  .pdf-stage {
+    position: relative;
+    height: calc(100dvh - 11rem);
+    min-height: 22rem;
+    border: 1px solid var(--rule);
+    background: #e6e1d4;
+  }
+
+  .pdf-container {
+    position: absolute;
+    inset: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pdf-viewer-root .pdfViewer {
+    line-height: 1;
+    text-align: left;
+  }
+
+  .pdf-viewer-root .pdfViewer .page {
+    margin: 0.8rem auto;
+    border: 0;
+    border-image: none;
+    box-shadow: 0 1px 6px rgba(37, 47, 70, 0.2);
+  }
+
+  /* 検索の一致箇所の色 */
+  .pdf-viewer-root .textLayer {
+    --highlight-bg-color: rgba(214, 160, 40, 0.4);
+    --highlight-selected-bg-color: rgba(162, 44, 50, 0.45);
+  }
+
+  /* 目次パネル */
+  .pdf-outline {
+    position: absolute;
+    inset: 0 auto 0 0;
+    z-index: 2;
+    width: min(85%, 18rem);
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: 0.6em 0.4em;
+    border-right: 1px solid var(--rule);
+    background: var(--paper);
+    box-shadow: 2px 0 8px rgba(37, 47, 70, 0.12);
+    line-height: 1.6;
+  }
+
+  .pdf-outline ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pdf-outline ul ul {
+    padding-left: 1em;
+  }
+
+  .pdf-outline li {
+    margin: 0;
+  }
+
+  .pdf-outline button {
+    display: block;
+    width: 100%;
+    padding: 0.2em 0.5em;
+    border: 0;
+    text-align: left;
+  }
+
+  @media (min-width: 46rem) {
+    .pdf-outline {
+      width: 16rem;
+      box-shadow: none;
+    }
+
+    .pdf-stage[data-outline='open'] .pdf-container {
+      left: 16rem;
+    }
+  }
+
+  .pdf-status {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 1em;
+    text-align: center;
+    color: var(--ink-soft);
+    pointer-events: none;
+  }
+
+  .pdf-status a {
+    pointer-events: auto;
+  }
+</style>

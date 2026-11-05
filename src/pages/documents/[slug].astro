@@ -1,0 +1,18 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PdfViewer from '../../components/PdfViewer.astro';
+import { documents } from '../../data/documents';
+
+export function getStaticPaths() {
+  return documents.map((doc) => ({ params: { slug: doc.slug }, props: { doc } }));
+}
+
+const { doc } = Astro.props;
+---
+
+<Layout title={doc.title}>
+  <h1>{doc.title}</h1>
+  {doc.description && <p class="meta">{doc.description}</p>}
+  <PdfViewer file={doc.file} />
+  <p><a href="/documents/">資料の一覧へ</a></p>
+</Layout>

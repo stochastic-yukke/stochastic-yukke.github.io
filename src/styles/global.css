@@ -37,7 +37,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   background: var(--paper);
-  overscroll-behavior: none; /* ページの端でスクロールを止める（跳ね返らない） */
+  overscroll-behavior: none; /* ページの端でスクロールを止める */
 }
 
 body {

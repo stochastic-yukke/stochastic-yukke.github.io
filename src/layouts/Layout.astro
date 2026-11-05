@@ -8,10 +8,14 @@ import 'katex/dist/katex.min.css';
 import '../styles/global.css';
 
 // Markdownページではfrontmatterを渡す。Astroページではtitleを直接渡す。
-// hero: トップページ用
-const { frontmatter, title: titleProp, hero = false } = Astro.props;
+interface Props {
+  title?: string;
+  hero?: boolean;
+  frontmatter?: { title?: string; date?: string; [key: string]: unknown };
+}
+const { frontmatter, hero = false } = Astro.props;
 const isNote = Boolean(frontmatter);
-const title = titleProp ?? frontmatter?.title;
+const title = Astro.props.title ?? frontmatter?.title;
 
 // scripts/subset_fonts.pyが読み取る値；書き換えたらスクリプトを再実行してねー
 const siteName = '真砂なす数なき山顚の';
@@ -74,7 +78,7 @@ const heroChars = [...siteName].map((ch, k) => {
         isNote && (
           <>
             <h1>{title}</h1>
-            {frontmatter.date && <p class="meta">{frontmatter.date}</p>}
+            {frontmatter?.date && <p class="meta">{frontmatter.date}</p>}
           </>
         )
       }
