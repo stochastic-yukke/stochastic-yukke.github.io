@@ -1,7 +1,7 @@
 ---
 title: ガロア対応のメモ
 date: 2026-11-05
-category: math
+category: [math]
 draft: true
 ---
 
