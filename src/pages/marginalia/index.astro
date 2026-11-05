@@ -1,0 +1,175 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getArticles, collectCategories, formatDate } from '../../lib/marginalia';
+
+const articles = await getArticles();
+const categories = collectCategories(articles);
+---
+
+<Layout title="marginalia">
+  <h1>marginalia</h1>
+  <p class="lead">数式を交えたメモを置いています。</p>
+
+  <div data-marginalia>
+    {
+      categories.length > 0 && (
+        <div class="filters" role="group" aria-label="カテゴリーで絞り込む">
+          <button type="button" data-filter="*" aria-pressed="true">
+            すべて<span class="n">{articles.length}</span>
+          </button>
+          {categories.map((c) => (
+            <button type="button" data-filter={c.name} aria-pressed="false">
+              {c.name}
+              <span class="n">{c.count}</span>
+            </button>
+          ))}
+        </div>
+      )
+    }
+
+    <ul class="entries">
+      {
+        articles.map((a) => (
+          <li data-categories={JSON.stringify(a.data.category)}>
+            <time datetime={formatDate(a.data.date)}>{formatDate(a.data.date)}</time>
+            <a href={`/marginalia/${a.id}/`}>{a.data.title}</a>
+            {a.data.draft && <span class="draft">下書き</span>}
+            {a.data.category.length > 0 && <span class="cats">{a.data.category.join(' · ')}</span>}
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="empty" data-empty hidden>このカテゴリーの記事は、まだありません。</p>
+  </div>
+</Layout>
+
+<script>
+  // カテゴリーのボタンで、一覧を絞り込む。選んだカテゴリーは ?category=数学 のようにURLに残る
+  const root = document.querySelector<HTMLElement>('[data-marginalia]');
+
+  if (root) {
+    const ALL = '*';
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>('button[data-filter]')];
+    const items = [...root.querySelectorAll<HTMLElement>('li[data-categories]')];
+    const empty = root.querySelector<HTMLElement>('[data-empty]');
+    const known = new Set(buttons.map((b) => b.dataset.filter ?? ALL));
+
+    const apply = (cat: string) => {
+      let shown = 0;
+      for (const li of items) {
+        const cats: string[] = JSON.parse(li.dataset.categories ?? '[]');
+        const show = cat === ALL || cats.includes(cat);
+        li.hidden = !show;
+        if (show) shown += 1;
+      }
+      for (const b of buttons) {
+        b.setAttribute('aria-pressed', String((b.dataset.filter ?? ALL) === cat));
+      }
+      if (empty) empty.hidden = shown > 0;
+    };
+
+    const fromUrl = new URLSearchParams(location.search).get('category') ?? ALL;
+    apply(known.has(fromUrl) ? fromUrl : ALL);
+
+    root.addEventListener('click', (e) => {
+      const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-filter]');
+      if (!b) return;
+      const cat = b.dataset.filter ?? ALL;
+      apply(cat);
+      history.replaceState(null, '', cat === ALL ? location.pathname : `?category=${encodeURIComponent(cat)}`);
+    });
+  }
+</script>
+
+<style>
+  .lead {
+    margin-bottom: 1.6em;
+    color: var(--ink-soft);
+  }
+
+  /* 絞り込みのボタンは、JavaScriptが動くときだけ出す（動かなければ、全記事がそのまま見える） */
+  .filters {
+    display: none;
+    flex-wrap: wrap;
+    gap: 0.4em 0.5em;
+    margin-bottom: 1.4em;
+    font-size: 0.9em;
+  }
+
+  :global(.js) .filters {
+    display: flex;
+  }
+
+  .filters button {
+    padding: 0.1em 0.8em;
+    border: 1px solid var(--rule);
+    background: none;
+    color: var(--ink);
+    font: inherit;
+    line-height: 1.7;
+    cursor: pointer;
+  }
+
+  .filters button:hover {
+    background: rgba(37, 47, 70, 0.06);
+  }
+
+  .filters button[aria-pressed='true'] {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .filters button:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+  }
+
+  .n {
+    margin-left: 0.4em;
+    font-size: 0.85em;
+    opacity: 0.7;
+  }
+
+  .entries {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .entries li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 1em;
+    margin: 0;
+    padding: 0.55em 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .entries li[hidden] {
+    display: none;
+  }
+
+  .entries time {
+    flex: none;
+    color: var(--ink-soft);
+    font-size: 0.85em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cats,
+  .draft {
+    color: var(--ink-soft);
+    font-size: 0.8em;
+  }
+
+  .cats {
+    margin-left: auto;
+  }
+
+  .empty {
+    color: var(--ink-soft);
+  }
+</style>

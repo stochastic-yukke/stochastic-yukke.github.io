@@ -1,0 +1,47 @@
+---
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { getArticles, formatDate } from '../../lib/marginalia';
+
+export async function getStaticPaths() {
+  const articles = await getArticles();
+  return articles.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Layout frontmatter={{ title: entry.data.title, date: formatDate(entry.data.date) }}>
+  {
+    entry.data.category.length > 0 && (
+      <p class="cats">
+        {entry.data.category.map((c) => (
+          <a href={`/marginalia/?category=${encodeURIComponent(c)}`}>{c}</a>
+        ))}
+      </p>
+    )
+  }
+
+  <Content />
+
+  <p class="back"><a href="/marginalia/">marginalia の一覧へ</a></p>
+</Layout>
+
+<style>
+  .cats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.8em;
+    margin: -1.4em 0 2em;
+    font-size: 0.85em;
+  }
+
+  .cats a {
+    color: var(--ink-soft);
+  }
+
+  .back {
+    margin-top: 3em;
+  }
+</style>

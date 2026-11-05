@@ -1,7 +1,8 @@
 ---
-layout: ../../layouts/Layout.astro
-title: 数式表示サンプル
-date: 2026-11-03
+title: ガロア対応のメモ
+date: 2026-11-05
+category: math
+draft: true
 ---
 
 表示の確認用のページです。本文中の式は $\Gal(L/K)$，$\C$ のように書き，独立させたい式は次のように書きます。

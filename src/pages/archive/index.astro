@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { archive } from '../../data/archive';
+---
+
+<Layout title="archive">
+  <h1>archive</h1>
+  <p class="lead">PDFなどの資料を置いています。</p>
+
+  <ul class="items">
+    {
+      archive.map((d) => (
+        <li>
+          <a href={`/archive/${d.slug}/`}>{d.title}</a>
+          {d.date && <span class="date">{d.date}</span>}
+          {d.description && <p>{d.description}</p>}
+        </li>
+      ))
+    }
+  </ul>
+</Layout>
+
+<style>
+  .lead {
+    margin-bottom: 1.6em;
+    color: var(--ink-soft);
+  }
+
+  .items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .items li {
+    margin: 0;
+    padding: 0.7em 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .date {
+    margin-left: 1em;
+    color: var(--ink-soft);
+    font-size: 0.85em;
+  }
+
+  .items p {
+    margin: 0.2em 0 0;
+    color: var(--ink-soft);
+    font-size: 0.9em;
+  }
+</style>
