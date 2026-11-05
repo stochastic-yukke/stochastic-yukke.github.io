@@ -20,9 +20,13 @@
   --gutter: clamp(1.1rem, 5vw, 2.5rem);
 
   --font-latin: "STIX Two Text", "Palatino", "Times New Roman";
-  --font-ja: "Toppan Bunkyu Mincho", "凸版文久明朝", "Noto Serif JP",
-    "Hiragino Mincho ProN", "Yu Mincho";
+  --font-ja: "Toppan Bunkyu Mincho", "凸版文久明朝", "Toppan Bunkyu Mincho Pr6N", "凸版文久明朝 Pr6N", "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho";
   --font-title: "Oradano Title", var(--font-latin), var(--font-ja);
+}
+
+::selection {
+  background-color: #d95c50;
+  color: var(--paper);
 }
 
 *,
@@ -49,11 +53,18 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-latin), var(--font-ja), serif;
-  font-weight: 500;;
+  font-weight: 400; /* ← 500から400に戻す（Mac等で凸版文久明朝を効かせるため） */
   line-height: 1.95;
   line-break: strict;
   overflow-wrap: break-word;
   font-kerning: normal;
+}
+
+/* スマホなど画面幅が狭い端末でのみ、細く見えないようにウェイトを上げる */
+@media (max-width: 768px) {
+  body {
+    font-weight: 500;
+  }
 }
 
 .site-header,
@@ -412,7 +423,6 @@ main {
 }
 
 .js .has-hero .ch {
-  /* 文字ごとの進み具合。先頭の字から順に動き出し，なめらかに加減速 */
   --t: clamp(0, calc(var(--p) * 1.45 - var(--k) * 0.05), 1);
   --e: calc(var(--t) * var(--t) * (3 - 2 * var(--t)));
 
@@ -442,7 +452,10 @@ main {
 
 .night-sky {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: -30vh;
   z-index: 0;
   background-color: #0b101d;
   transform: translateY(calc(var(--p) * -20vh));
