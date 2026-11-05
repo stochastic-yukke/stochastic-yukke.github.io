@@ -463,10 +463,10 @@ main {
   top: 0;
   left: 0;
   right: 0;
-  bottom: -30svh;
+  bottom: -100svh;
   z-index: 0;
   background-color: #0b101d;
-  transform: translateY(calc(var(--p) * -20svh));
+  transform: translateY(calc(var(--p) * -20vh));
   pointer-events: none;
   -webkit-mask-image: linear-gradient(to top, transparent calc(var(--p) * 150% - 50%), black calc(var(--p) * 150%));
   mask-image: linear-gradient(to top, transparent calc(var(--p) * 150% - 50%), black calc(var(--p) * 150%));

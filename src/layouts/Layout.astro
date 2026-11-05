@@ -105,7 +105,7 @@ const heroChars = [...siteName].map((ch, k) => {
     </footer>
 
     <script is:inline>
-      // スクロール量得た --p で星を描く
+      // スクロール量から得た --p で星を描く
       (function () {
         if (!document.querySelector('.has-hero')) return;
         var root = document.documentElement;
@@ -113,18 +113,16 @@ const heroChars = [...siteName].map((ch, k) => {
         var meta = document.getElementById('theme-color');
         var SKY = '#0b101d';
         var PAPER = '#f5f2eb';
-        var RANGE = 0.9; // 動作の終了までのスクロール量
+        var RANGE = 0.9;
         var ticking = false;
 
-        // 追加: 計算基準となる高さと幅を固定するための変数
         var baseHeight = window.innerHeight;
         var lastWidth = window.innerWidth;
 
         function update() {
           ticking = false;
-          // 変更: 変動する innerHeight ではなく、固定した baseHeight を使用
           var p = Math.min(Math.max(scrollY / (baseHeight * RANGE), 0), 1);
-          if (reduce) p = scrollY > 40 ? 1 : 0; // 動きを減らす
+          if (reduce) p = scrollY > 40 ? 1 : 0; 
           root.style.setProperty('--p', p.toFixed(4));
           if (meta) meta.setAttribute('content', p < 0.9 ? SKY : PAPER);
         }
@@ -132,21 +130,6 @@ const heroChars = [...siteName].map((ch, k) => {
         function onScroll() {
           if (!ticking) { ticking = true; requestAnimationFrame(update); }
         }
-
-        // 追加: 画面の横幅が変わった時(端末の回転など)のみ高さを再取得する
-        function onResizeEvent() {
-          if (window.innerWidth !== lastWidth) {
-            lastWidth = window.innerWidth;
-            baseHeight = window.innerHeight;
-          }
-          onScroll();
-        }
-
-        addEventListener('scroll', onScroll, { passive: true });
-        // 変更: 単純な onScroll ではなく、横幅判定を行う onResizeEvent に変更
-        addEventListener('resize', onResizeEvent);
-
-        // ... (この下の var sky = document.querySelector('.night-sky'); 以降は変更なし)
 
         var sky = document.querySelector('.night-sky');
         var canvas = document.getElementById('starfield');
@@ -162,6 +145,7 @@ const heroChars = [...siteName].map((ch, k) => {
           canvas.height = Math.round(h * dpr);
           ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
           ctx.clearRect(0, 0, w, h);
+          // 面積に応じて星の数を調整
           var n = Math.round((w * h) / 4500);
           for (var i = 0; i < n; i++) {
             ctx.beginPath();
@@ -171,9 +155,19 @@ const heroChars = [...siteName].map((ch, k) => {
           }
         }
 
-        if (sky && 'ResizeObserver' in window) new ResizeObserver(drawStars).observe(sky);
-        else drawStars();
+        function onResizeEvent() {
+          if (window.innerWidth !== lastWidth) {
+            lastWidth = window.innerWidth;
+            baseHeight = window.innerHeight;
+            drawStars();
+          }
+          onScroll();
+        }
 
+        addEventListener('scroll', onScroll, { passive: true });
+        addEventListener('resize', onResizeEvent);
+
+        drawStars();
         update();
       })();
     </script>
