@@ -109,16 +109,31 @@ const heroChars = [...siteName].map((ch, k) => {
         if (!document.querySelector('.has-hero')) return;
         var root = document.documentElement;
         var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-        var meta = document.getElementById('theme-color');
+        
+        // 修正1: idではなく、name属性で正しくmetaタグ(タブバーの色)を取得する
+        var meta = document.querySelector('meta[name="theme-color"]');
+        var sky = document.querySelector('.night-sky');
         var ticking = false;
 
         function update() {
           ticking = false;
-          // 初期コードの安定していた計算式にリセット
-          var p = Math.min(Math.max(scrollY / (innerHeight * 0.6), 0), 1);
+          
+          // 変更: CSSのスペーサーから実際の高さを取得し、それをアニメーション距離とする
+          var spacer = document.querySelector('.hero-spacer');
+          var scrollDist = spacer ? spacer.offsetHeight : innerHeight * 1.5;
+          
+          // スクロール量をスペーサーの高さで割ることで、完全に同期させる
+          var p = Math.min(Math.max(scrollY / scrollDist, 0), 1);
           if (reduce) p = scrollY > 40 ? 1 : 0;
           root.style.setProperty('--p', p.toFixed(4));
-          if (meta) meta.setAttribute('content', p < 0.9 ? '#0b101d' : '#f5f2eb');
+          
+          if (sky) {
+            sky.style.visibility = p === 1 ? 'hidden' : 'visible';
+          }
+          
+          if (meta) {
+            meta.setAttribute('content', p < 1 ? '#0b101d' : '#f5f2eb');
+          }
         }
 
         function onScroll() {
@@ -129,13 +144,12 @@ const heroChars = [...siteName].map((ch, k) => {
         addEventListener('resize', onScroll);
         update();
 
-        // 星空の描画（リサイズによる再描画をなくし、チラつきを根絶）
+        // 星の描画（変更なし）
         var canvas = document.getElementById('starfield');
         if (canvas) {
           var ctx = canvas.getContext('2d');
-          // 画面外にはみ出しても良いように少し大きめに描画領域をとる
           var w = window.innerWidth;
-          var h = window.screen.height; // innerHeightではなく画面最大値をとる
+          var h = window.screen.height;
           var dpr = Math.min(window.devicePixelRatio || 1, 2);
           
           canvas.width = w * dpr;
@@ -145,7 +159,7 @@ const heroChars = [...siteName].map((ch, k) => {
           var n = Math.round((w * h) / 4500);
           for (var i = 0; i < n; i++) {
             ctx.beginPath();
-            ctx.arc(Math.random() * w, Math.random() * h, 0.25 + Math.random() * 1.0, 0, Math.PI * 2);
+            ctx.arc(Math.random() * w, Math.random() * h, 0.4 + Math.random() * 1.5, 0, Math.PI * 2);
             ctx.fillStyle = 'rgba(255, 255, 255, ' + Math.random().toFixed(2) + ')';
             ctx.fill();
           }

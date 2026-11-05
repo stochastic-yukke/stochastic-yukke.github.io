@@ -451,29 +451,39 @@ main {
 }
 
 .js .has-hero .hero-spacer {
-  height: calc(100svh - 5.2rem);
+  height: 120svh;
 }
 
 .js .has-hero main {
-  min-height: 70svh;
+  min-height: 80dvh;
 }
 
 .night-sky {
   position: fixed;
-  inset: 0; /* top, left, right, bottom 全て0 */
-  height: 100dvh; /* スマホのタブバー伸縮に自動でぴったり追従する単位 */
+  top: 0;
+  left: 0;
+  right: 0;
+  /* 上昇時に底が見えないよう下方向に20vhの余白を持たせる */
+  bottom: -20vh;
   z-index: 0;
   background-color: #0b101d;
   pointer-events: none;
-  /* 変更: translateY(移動)を完全に削除し、maskのみで下から紙の色を露出させる */
+  
+  /* 上昇アクションを復活 (p=1 のとき上方向へ 15vh 移動) */
+  transform: translateY(calc(var(--p) * -15vh));
+  
+  /* 下から順に晴れていくグラデーションマスク */
   -webkit-mask-image: linear-gradient(to top, transparent calc(var(--p) * 200% - 100%), black calc(var(--p) * 200%));
   mask-image: linear-gradient(to top, transparent calc(var(--p) * 200% - 100%), black calc(var(--p) * 200%));
 }
 
 #starfield {
   width: 100%;
-  height: 100%;
+  /* 上に移動した際に底の星が切れてしまわないよう、高さを画面より少し大きめに確保します */
+  height: 120vh;
   display: block;
+  /* スクロール進行度(--p)に合わせて、星のキャンバスだけを上へ吸い込まれるように移動させます */
+  transform: translateY(calc(var(--p) * -20vh));
 }
 
 /* Scroll Indicator */
