@@ -116,9 +116,14 @@ const heroChars = [...siteName].map((ch, k) => {
         var RANGE = 0.9; // 動作の終了までのスクロール量
         var ticking = false;
 
+        // 追加: 計算基準となる高さと幅を固定するための変数
+        var baseHeight = window.innerHeight;
+        var lastWidth = window.innerWidth;
+
         function update() {
           ticking = false;
-          var p = Math.min(Math.max(scrollY / (innerHeight * RANGE), 0), 1);
+          // 変更: 変動する innerHeight ではなく、固定した baseHeight を使用
+          var p = Math.min(Math.max(scrollY / (baseHeight * RANGE), 0), 1);
           if (reduce) p = scrollY > 40 ? 1 : 0; // 動きを減らす
           root.style.setProperty('--p', p.toFixed(4));
           if (meta) meta.setAttribute('content', p < 0.9 ? SKY : PAPER);
@@ -127,8 +132,21 @@ const heroChars = [...siteName].map((ch, k) => {
         function onScroll() {
           if (!ticking) { ticking = true; requestAnimationFrame(update); }
         }
+
+        // 追加: 画面の横幅が変わった時(端末の回転など)のみ高さを再取得する
+        function onResizeEvent() {
+          if (window.innerWidth !== lastWidth) {
+            lastWidth = window.innerWidth;
+            baseHeight = window.innerHeight;
+          }
+          onScroll();
+        }
+
         addEventListener('scroll', onScroll, { passive: true });
-        addEventListener('resize', onScroll);
+        // 変更: 単純な onScroll ではなく、横幅判定を行う onResizeEvent に変更
+        addEventListener('resize', onResizeEvent);
+
+        // ... (この下の var sky = document.querySelector('.night-sky'); 以降は変更なし)
 
         var sky = document.querySelector('.night-sky');
         var canvas = document.getElementById('starfield');
