@@ -388,7 +388,6 @@ main {
   transform: translateY(0.5em);
 }
 
-
 /* トップページのhero */
 :root {
   --hero-size: clamp(2.6rem, 14vw, 4.2rem); /* 縦書きのときの1字の大きさ */
@@ -455,7 +454,7 @@ main {
   top: 0;
   left: 0;
   right: 0;
-  bottom: -30vh;
+  bottom: -30svh;
   z-index: 0;
   background-color: #0b101d;
   transform: translateY(calc(var(--p) * -20vh));

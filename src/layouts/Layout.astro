@@ -39,7 +39,7 @@ const heroChars = [...siteName].map((ch, k) => {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f5f2eb" />
+    <meta name="theme-color" content="#f5f2eb" id="theme-color" />
     <title>{pageTitle}</title>
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
@@ -105,68 +105,58 @@ const heroChars = [...siteName].map((ch, k) => {
     </footer>
 
     <script is:inline>
-      // heroのみ
+      // スクロール量得た --p で星を描く
       (function () {
         if (!document.querySelector('.has-hero')) return;
         var root = document.documentElement;
         var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var meta = document.getElementById('theme-color');
+        var SKY = '#0b101d';
+        var PAPER = '#f5f2eb';
+        var RANGE = 0.92; // 動作の終了までのスクロール量
         var ticking = false;
-
-        var lastWidth = 0;
-        var scrollRange = window.innerHeight * 0.6;
 
         function update() {
           ticking = false;
-          var p = Math.min(Math.max(scrollY / scrollRange, 0), 1);
+          var p = Math.min(Math.max(scrollY / (innerHeight * RANGE), 0), 1);
           if (reduce) p = scrollY > 40 ? 1 : 0; // 動きを減らす
           root.style.setProperty('--p', p.toFixed(4));
+          if (meta) meta.setAttribute('content', p < 0.9 ? SKY : PAPER);
         }
 
         function onScroll() {
           if (!ticking) { ticking = true; requestAnimationFrame(update); }
         }
         addEventListener('scroll', onScroll, { passive: true });
+        addEventListener('resize', onScroll);
 
+        var sky = document.querySelector('.night-sky');
         var canvas = document.getElementById('starfield');
         var ctx = canvas ? canvas.getContext('2d') : null;
-        var stars = [];
 
         function drawStars() {
-          if (!ctx) return;
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          for (var i = 0; i < stars.length; i++) {
+          if (!canvas || !ctx) return;
+          var w = canvas.clientWidth;
+          var h = canvas.clientHeight;
+          if (!w || !h) return;
+          var dpr = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = Math.round(w * dpr);
+          canvas.height = Math.round(h * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          ctx.clearRect(0, 0, w, h);
+          var n = Math.round((w * h) / 4500);
+          for (var i = 0; i < n; i++) {
             ctx.beginPath();
-            ctx.arc(stars[i].x, stars[i].y, stars[i].r, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255, 255, 255, ' + stars[i].a + ')';
+            ctx.arc(Math.random() * w, Math.random() * h, 0.25 + Math.random() * 1.0, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, ' + Math.random().toFixed(2) + ')';
             ctx.fill();
           }
         }
 
-        function onResize() {
-          if (window.innerWidth === lastWidth && stars.length > 0) return;
-          lastWidth = window.innerWidth;
-          scrollRange = window.innerHeight * 0.6;
+        if (sky && 'ResizeObserver' in window) new ResizeObserver(drawStars).observe(sky);
+        else drawStars();
 
-          if (canvas) {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            stars = [];
-            for (var i = 0; i < 200; i++) {
-              stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                r: Math.random() * 1.2,
-                a: Math.random()
-              });
-            }
-            drawStars();
-          }
-
-          onScroll(); // resize時に --p の値を更新
-        }
-
-        addEventListener('resize', onResize);
-        onResize();
+        update();
       })();
     </script>
   </body>
