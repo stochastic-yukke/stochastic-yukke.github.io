@@ -460,16 +460,14 @@ main {
 
 .night-sky {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: -100svh;
+  inset: 0; /* top, left, right, bottom 全て0 */
+  height: 100dvh; /* スマホのタブバー伸縮に自動でぴったり追従する単位 */
   z-index: 0;
   background-color: #0b101d;
-  transform: translateY(calc(var(--p) * -20vh));
   pointer-events: none;
-  -webkit-mask-image: linear-gradient(to top, transparent calc(var(--p) * 150% - 50%), black calc(var(--p) * 150%));
-  mask-image: linear-gradient(to top, transparent calc(var(--p) * 150% - 50%), black calc(var(--p) * 150%));
+  /* 変更: translateY(移動)を完全に削除し、maskのみで下から紙の色を露出させる */
+  -webkit-mask-image: linear-gradient(to top, transparent calc(var(--p) * 200% - 100%), black calc(var(--p) * 200%));
+  mask-image: linear-gradient(to top, transparent calc(var(--p) * 200% - 100%), black calc(var(--p) * 200%));
 }
 
 #starfield {

@@ -105,47 +105,43 @@ const heroChars = [...siteName].map((ch, k) => {
     </footer>
 
     <script is:inline>
-      // スクロール量から得た --p で星を描く
       (function () {
         if (!document.querySelector('.has-hero')) return;
         var root = document.documentElement;
         var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
         var meta = document.getElementById('theme-color');
-        var SKY = '#0b101d';
-        var PAPER = '#f5f2eb';
-        var RANGE = 0.9;
         var ticking = false;
-
-        var baseHeight = window.innerHeight;
-        var lastWidth = window.innerWidth;
 
         function update() {
           ticking = false;
-          var p = Math.min(Math.max(scrollY / (baseHeight * RANGE), 0), 1);
-          if (reduce) p = scrollY > 40 ? 1 : 0; 
+          // 初期コードの安定していた計算式にリセット
+          var p = Math.min(Math.max(scrollY / (innerHeight * 0.6), 0), 1);
+          if (reduce) p = scrollY > 40 ? 1 : 0;
           root.style.setProperty('--p', p.toFixed(4));
-          if (meta) meta.setAttribute('content', p < 0.9 ? SKY : PAPER);
+          if (meta) meta.setAttribute('content', p < 0.9 ? '#0b101d' : '#f5f2eb');
         }
 
         function onScroll() {
           if (!ticking) { ticking = true; requestAnimationFrame(update); }
         }
 
-        var sky = document.querySelector('.night-sky');
-        var canvas = document.getElementById('starfield');
-        var ctx = canvas ? canvas.getContext('2d') : null;
+        addEventListener('scroll', onScroll, { passive: true });
+        addEventListener('resize', onScroll);
+        update();
 
-        function drawStars() {
-          if (!canvas || !ctx) return;
-          var w = canvas.clientWidth;
-          var h = canvas.clientHeight;
-          if (!w || !h) return;
+        // 星空の描画（リサイズによる再描画をなくし、チラつきを根絶）
+        var canvas = document.getElementById('starfield');
+        if (canvas) {
+          var ctx = canvas.getContext('2d');
+          // 画面外にはみ出しても良いように少し大きめに描画領域をとる
+          var w = window.innerWidth;
+          var h = window.screen.height; // innerHeightではなく画面最大値をとる
           var dpr = Math.min(window.devicePixelRatio || 1, 2);
-          canvas.width = Math.round(w * dpr);
-          canvas.height = Math.round(h * dpr);
+          
+          canvas.width = w * dpr;
+          canvas.height = h * dpr;
           ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-          ctx.clearRect(0, 0, w, h);
-          // 面積に応じて星の数を調整
+          
           var n = Math.round((w * h) / 4500);
           for (var i = 0; i < n; i++) {
             ctx.beginPath();
@@ -154,21 +150,6 @@ const heroChars = [...siteName].map((ch, k) => {
             ctx.fill();
           }
         }
-
-        function onResizeEvent() {
-          if (window.innerWidth !== lastWidth) {
-            lastWidth = window.innerWidth;
-            baseHeight = window.innerHeight;
-            drawStars();
-          }
-          onScroll();
-        }
-
-        addEventListener('scroll', onScroll, { passive: true });
-        addEventListener('resize', onResizeEvent);
-
-        drawStars();
-        update();
       })();
     </script>
   </body>
