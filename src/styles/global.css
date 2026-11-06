@@ -53,14 +53,13 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-latin), var(--font-ja), serif;
-  font-weight: 400; /* ← 500から400に戻す（Mac等で凸版文久明朝を効かせるため） */
+  font-weight: 400;
   line-height: 1.95;
   line-break: strict;
   overflow-wrap: break-word;
   font-kerning: normal;
 }
 
-/* スマホなど画面幅が狭い端末でのみ、細く見えないようにウェイトを上げる */
 @media (max-width: 768px) {
   body {
     font-weight: 500;
@@ -399,7 +398,7 @@ main {
 
 /* トップページのhero */
 :root {
-  --hero-size: clamp(2.6rem, 14vw, 4.2rem); /* 縦書きのときの1字の大きさ */
+  --hero-size: clamp(2.6rem, 14vw, 4.2rem);
   --head-size: 1.35rem;
   --p: 0;
 }
@@ -460,29 +459,19 @@ main {
 
 .night-sky {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  /* 上昇時に底が見えないよう下方向に20vhの余白を持たせる */
-  bottom: -20vh;
+  inset: 0;
+  height: 100dvh;
   z-index: 0;
   background-color: #0b101d;
   pointer-events: none;
-  
-  /* 上昇アクションを復活 (p=1 のとき上方向へ 15vh 移動) */
-  transform: translateY(calc(var(--p) * -15vh));
-  
-  /* 下から順に晴れていくグラデーションマスク */
   -webkit-mask-image: linear-gradient(to top, transparent calc(var(--p) * 200% - 100%), black calc(var(--p) * 200%));
   mask-image: linear-gradient(to top, transparent calc(var(--p) * 200% - 100%), black calc(var(--p) * 200%));
 }
 
 #starfield {
   width: 100%;
-  /* 上に移動した際に底の星が切れてしまわないよう、高さを画面より少し大きめに確保します */
   height: 120vh;
   display: block;
-  /* スクロール進行度(--p)に合わせて、星のキャンバスだけを上へ吸い込まれるように移動させます */
   transform: translateY(calc(var(--p) * -20vh));
 }
 

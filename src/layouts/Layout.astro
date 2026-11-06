@@ -110,7 +110,6 @@ const heroChars = [...siteName].map((ch, k) => {
         var root = document.documentElement;
         var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
         
-        // 修正1: idではなく、name属性で正しくmetaタグ(タブバーの色)を取得する
         var meta = document.querySelector('meta[name="theme-color"]');
         var sky = document.querySelector('.night-sky');
         var ticking = false;
@@ -118,11 +117,9 @@ const heroChars = [...siteName].map((ch, k) => {
         function update() {
           ticking = false;
           
-          // 変更: CSSのスペーサーから実際の高さを取得し、それをアニメーション距離とする
           var spacer = document.querySelector('.hero-spacer');
           var scrollDist = spacer ? spacer.offsetHeight : innerHeight * 1.5;
           
-          // スクロール量をスペーサーの高さで割ることで、完全に同期させる
           var p = Math.min(Math.max(scrollY / scrollDist, 0), 1);
           if (reduce) p = scrollY > 40 ? 1 : 0;
           root.style.setProperty('--p', p.toFixed(4));
@@ -144,7 +141,6 @@ const heroChars = [...siteName].map((ch, k) => {
         addEventListener('resize', onScroll);
         update();
 
-        // 星の描画（変更なし）
         var canvas = document.getElementById('starfield');
         if (canvas) {
           var ctx = canvas.getContext('2d');
