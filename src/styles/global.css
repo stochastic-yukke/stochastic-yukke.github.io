@@ -19,7 +19,7 @@
   --measure: 38em;
   --gutter: clamp(1.1rem, 5vw, 2.5rem);
 
-  --font-latin: "STIX Two Text", "Palatino", "Times New Roman";
+  --font-latin: "Gentium Plus", "STIX Two Text", "Palatino", "Times New Roman";
   --font-ja: "Toppan Bunkyu Mincho", "凸版文久明朝", "Toppan Bunkyu Mincho Pr6N", "凸版文久明朝 Pr6N", "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho";
   --font-title: "Oradano Title", var(--font-latin), var(--font-ja);
 }
